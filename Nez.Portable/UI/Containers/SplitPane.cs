@@ -82,10 +82,10 @@ namespace Nez.UI
 
 		bool IInputListener.onMousePressed( Vector2 mousePos )
 		{
-			if( _handleBounds.contains( mousePos ) )
+			if( _handleBounds.Contains( mousePos ) )
 			{
 				_lastPoint = mousePos;
-				_handlePosition = _handleBounds.location;
+				_handlePosition = _handleBounds.Location;
 				return true;
 			}
 			return false;

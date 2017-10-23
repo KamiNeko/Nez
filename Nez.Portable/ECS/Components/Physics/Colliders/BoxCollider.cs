@@ -75,7 +75,7 @@ namespace Nez
 				// update the box, dirty our bounds and if we need to update our bounds in the Physics system
 				box.updateBox( width, height );
 				_isPositionDirty = true;
-				if( entity != null && _isParentEntityAddedToScene )
+				if( Entity != null && _isParentEntityAddedToScene )
 					Physics.updateCollider( this );
 			}
 
@@ -97,7 +97,7 @@ namespace Nez
 				// update the box, dirty our bounds and if we need to update our bounds in the Physics system
 				box.updateBox( width, box.height );
 				_isPositionDirty = true;
-				if( entity != null && _isParentEntityAddedToScene )
+				if( Entity != null && _isParentEntityAddedToScene )
 					Physics.updateCollider( this );
 			}
 
@@ -119,7 +119,7 @@ namespace Nez
 				// update the box, dirty our bounds and if we need to update our bounds in the Physics system
 				box.updateBox( box.width, height );
 				_isPositionDirty = true;
-				if( entity != null && _isParentEntityAddedToScene )
+				if( Entity != null && _isParentEntityAddedToScene )
 					Physics.updateCollider( this );
 			}
 
@@ -129,13 +129,13 @@ namespace Nez
 		#endregion
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			var poly = shape as Polygon;
 			graphics.batcher.drawHollowRect( bounds, Debug.Colors.colliderBounds, Debug.Size.lineSizeMultiplier );
 			graphics.batcher.drawPolygon( shape.position, poly.points, Debug.Colors.colliderEdge, true, Debug.Size.lineSizeMultiplier );
-			graphics.batcher.drawPixel( entity.transform.position, Debug.Colors.colliderPosition, 4 * Debug.Size.lineSizeMultiplier );
-			graphics.batcher.drawPixel( entity.transform.position + shape.center, Debug.Colors.colliderCenter, 2 * Debug.Size.lineSizeMultiplier );
+			graphics.batcher.drawPixel( Entity.transform.position, Debug.Colors.colliderPosition, 4 * Debug.Size.lineSizeMultiplier );
+			graphics.batcher.drawPixel( Entity.transform.position + shape.center, Debug.Colors.colliderCenter, 2 * Debug.Size.lineSizeMultiplier );
 		}
 
 

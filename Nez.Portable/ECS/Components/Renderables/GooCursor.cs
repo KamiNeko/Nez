@@ -10,8 +10,8 @@ namespace Nez
 	/// </summary>
 	public class GooCursor : RenderableComponent, IUpdatable
 	{
-		public override float width { get { return _cursorTexture.Width; } }
-		public override float height { get { return _cursorTexture.Height; } }
+		public override float Width { get { return _cursorTexture.Width; } }
+		public override float Height { get { return _cursorTexture.Height; } }
 
 		/// <summary>
 		/// Gets of Sets the stiffness of the trail A lower number means the trail will be longer
@@ -79,9 +79,9 @@ namespace Nez
 		}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			_cursorTexture = entity.scene.content.Load<Texture2D>( "nez/textures/gooCursor" );
+			_cursorTexture = Entity.scene.ContentManager.Load<Texture2D>( "nez/textures/gooCursor" );
 			_textureCenter = new Vector2( _cursorTexture.Width / 2, _cursorTexture.Height / 2 );
 		}
 
@@ -111,7 +111,7 @@ namespace Nez
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// First we draw all the trail nodes using the border color. we need to draw them slightly larger, so the border is left visible
 			// when we draw the actual nodes

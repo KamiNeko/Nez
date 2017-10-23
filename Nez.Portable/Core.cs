@@ -221,18 +221,18 @@ namespace Nez
 			}
 
 			if( _scene != null )
-				_scene.update();
+				_scene.Update();
 
 			if( _scene != _nextScene )
 			{
 				if( _scene != null )
-					_scene.end();
+					_scene.End();
 
 				_scene = _nextScene;
 				onSceneChanged();
 
 				if( _scene != null )
-					_scene.begin();
+					_scene.Begin();
 			}
 
 			#if DEBUG
@@ -274,7 +274,7 @@ namespace Nez
 
 			if( _scene != null )
 			{
-				_scene.render();
+				_scene.Render();
 
 				#if DEBUG
 				if( debugRenderEnabled )
@@ -283,7 +283,7 @@ namespace Nez
 
 				// render as usual if we dont have an active SceneTransition
 				if( _sceneTransition == null )
-					_scene.postRender();
+					_scene.PostRender();
 			}
 
 			// special handling of SceneTransition if we have one
@@ -291,14 +291,14 @@ namespace Nez
 			{
 				if( _scene != null && _sceneTransition.wantsPreviousSceneRender && !_sceneTransition.hasPreviousSceneRender )
 				{
-					_scene.postRender( _sceneTransition.previousSceneRender );
+					_scene.PostRender( _sceneTransition.previousSceneRender );
 					if( _sceneTransition._loadsNewScene )
 						scene = null;
 					startCoroutine( _sceneTransition.onBeginTransition() );
 				}
 				else if( _scene != null )
 				{
-					_scene.postRender();
+					_scene.PostRender();
 				}
 
 				_sceneTransition.render( Graphics.instance );

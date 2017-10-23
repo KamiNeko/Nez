@@ -13,9 +13,9 @@ namespace Nez
 	/// </summary>
 	public class WaterReflectionPlane : RenderableComponent
 	{
-		public override float width { get { return _width; } }
-		public override float height { get { return _height; } }
-		public override Material material
+		public override float Width { get { return _width; } }
+		public override float Height { get { return _height; } }
+		public override Material Material
 		{
 			get { return _waterReflectionMaterial; }
 			set { _waterReflectionMaterial = value as WaterReflectionMaterial; }
@@ -44,13 +44,13 @@ namespace Nez
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// we need to send the top of of the plane to the Effect
-			var screenSpaceTop = entity.scene.camera.worldToScreenPoint( entity.transform.position );
-			_waterReflectionMaterial.effect.screenSpaceVerticalOffset = screenSpaceTop.Y / entity.scene.sceneRenderTargetSize.Y;
+			var screenSpaceTop = Entity.scene.Camera.worldToScreenPoint( Entity.transform.position );
+			_waterReflectionMaterial.effect.screenSpaceVerticalOffset = screenSpaceTop.Y / Entity.scene.SceneRenderTargetSize.Y;
 
-			graphics.batcher.draw( _texture, bounds, new Rectangle( 0, 0, 1, 1 ), color );
+			graphics.batcher.draw( _texture, Bounds, new Rectangle( 0, 0, 1, 1 ), Color );
 		}
 	}
 }

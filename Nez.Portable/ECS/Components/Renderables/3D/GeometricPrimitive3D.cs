@@ -45,11 +45,11 @@ namespace Nez
 		}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			base.onAddedToEntity();
+			base.OnAddedToEntity();
 
-			_basicEffect = entity.scene.content.loadMonoGameEffect<BasicEffect>();
+			_basicEffect = Entity.scene.ContentManager.loadMonoGameEffect<BasicEffect>();
 			_basicEffect.VertexColorEnabled = true;
 			_basicEffect.EnableDefaultLighting();
 		}
@@ -96,7 +96,7 @@ namespace Nez
 		#endregion
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// flush the 2D batch so we render appropriately depth-wise
 			graphics.batcher.flushBatch();
@@ -108,7 +108,7 @@ namespace Nez
 			_basicEffect.World = worldMatrix;
 			_basicEffect.View = camera.viewMatrix3D;
 			_basicEffect.Projection = camera.projectionMatrix3D;
-			_basicEffect.DiffuseColor = color.ToVector3();
+			_basicEffect.DiffuseColor = Color.ToVector3();
 
 			// Set our vertex declaration, vertex buffer, and index buffer.
 			Core.graphicsDevice.SetVertexBuffer( _vertexBuffer );

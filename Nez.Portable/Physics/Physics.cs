@@ -279,7 +279,7 @@ namespace Nez
 		public static IEnumerable<Collider> boxcastBroadphaseExcludingSelf( Collider collider, float deltaX, float deltaY, int layerMask = allLayers )
 		{
 			var colliderBounds = collider.bounds;
-			var sweptBounds = colliderBounds.getSweptBroadphaseBounds( deltaX, deltaY );
+			var sweptBounds = colliderBounds.GetSweptBroadphaseBounds( deltaX, deltaY );
 			return _spatialHash.aabbBroadphase( ref sweptBounds, collider, layerMask );
 		}
 

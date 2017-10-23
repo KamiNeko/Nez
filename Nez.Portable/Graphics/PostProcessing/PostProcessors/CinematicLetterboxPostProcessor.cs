@@ -60,7 +60,7 @@ namespace Nez
 
 		public override void onAddedToScene()
 		{
-			effect = scene.content.loadEffect<Effect>( "vignette", EffectResource.letterboxBytes );
+			effect = scene.ContentManager.loadEffect<Effect>( "vignette", EffectResource.letterboxBytes );
 
 			_colorParam = effect.Parameters["_color"];
 			_letterboxSizeParam = effect.Parameters["_letterboxSize"];

@@ -14,9 +14,9 @@ namespace Nez
 		Collider _collider;
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			_collider = entity.getComponent<Collider>();
+			_collider = Entity.getComponent<Collider>();
 			Assert.isNotNull( _collider, "null Collider. ProjectilMover requires a Collider!" );
 		}
 
@@ -31,7 +31,7 @@ namespace Nez
 			var didCollide = false;
 
 			// fetch anything that we might collide with at our new position
-			entity.transform.position += motion;
+			Entity.transform.position += motion;
 
 			// fetch anything that we might collide with us at our new position
 			var neighbors = Physics.boxcastBroadphase( _collider.bounds, _collider.collidesWithLayers );
@@ -51,14 +51,14 @@ namespace Nez
 		void notifyTriggerListeners( Collider self, Collider other )
 		{
 			// notify any listeners on the Entity of the Collider that we overlapped
-			other.entity.getComponents( _tempTriggerList );
+			other.Entity.getComponents( _tempTriggerList );
 			for( var i = 0; i < _tempTriggerList.Count; i++ )
 				_tempTriggerList[i].onTriggerEnter( self, other );
 
 			_tempTriggerList.Clear();
 
 			// notify any listeners on this Entity
-			entity.getComponents( _tempTriggerList );
+			Entity.getComponents( _tempTriggerList );
 			for( var i = 0; i < _tempTriggerList.Count; i++ )
 				_tempTriggerList[i].onTriggerEnter( other, self );
 

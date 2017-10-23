@@ -13,7 +13,7 @@ namespace Nez.DeferredLighting
 		{
 			get
 			{
-				return new Vector2( Mathf.cos( entity.transform.rotation ), Mathf.sin( entity.transform.rotation ) );
+				return new Vector2( Mathf.cos( Entity.transform.rotation ), Mathf.sin( Entity.transform.rotation ) );
 			}
 		}
 
@@ -29,7 +29,7 @@ namespace Nez.DeferredLighting
 
 		public SpotLight( Color color )
 		{
-			this.color = color;
+			this.Color = color;
 		}
 
 
@@ -82,7 +82,7 @@ namespace Nez.DeferredLighting
 		/// <param name="direction">Direction.</param>
 		public SpotLight setDirection( Vector2 direction )
 		{
-			entity.transform.rotation = (float)Math.Atan2( direction.Y, direction.X );
+			Entity.transform.rotation = (float)Math.Atan2( direction.Y, direction.X );
 			return this;
 		}
 	}

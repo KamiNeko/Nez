@@ -6,8 +6,8 @@
 	/// </summary>
 	public class TextRunComponent : RenderableComponent
 	{
-		public override float width { get { return textRun.width; } }
-		public override float height { get { return textRun.height; } }
+		public override float Width { get { return textRun.width; } }
+		public override float Height { get { return textRun.height; } }
 		public TextRun textRun;
 
 
@@ -22,13 +22,13 @@
 		/// </summary>
 		public void compile()
 		{
-			textRun.position = transform.position;
-			textRun.rotation = transform.rotation;
+			textRun.position = Transform.position;
+			textRun.rotation = Transform.rotation;
 			textRun.compile();
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			textRun.render( graphics );
 		}

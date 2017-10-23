@@ -33,14 +33,14 @@ namespace Nez
 		public void add( IRenderable component )
 		{
 			_components.add( component );
-			addToRenderLayerList( component, component.renderLayer );
+			addToRenderLayerList( component, component.RenderLayer );
 		}
 
 
 		public void remove( IRenderable component )
 		{
 			_components.remove( component );
-			_componentsByRenderLayer[component.renderLayer].remove( component );
+			_componentsByRenderLayer[component.RenderLayer].remove( component );
 		}
 
 

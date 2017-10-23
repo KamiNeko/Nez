@@ -12,7 +12,7 @@ namespace Nez3D
 	/// </summary>
 	public class Model3D : Renderable3D
 	{
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			get
 			{
@@ -56,7 +56,7 @@ namespace Nez3D
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// flush the 2D batch so we render appropriately depth-wise
 			graphics.batcher.flushBatch();

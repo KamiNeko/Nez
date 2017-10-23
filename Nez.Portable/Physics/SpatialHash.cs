@@ -112,7 +112,7 @@ namespace Nez.Spatial
 			var bounds = collider.bounds;
 			collider.registeredPhysicsBounds = bounds;
 			var p1 = cellCoords( bounds.x, bounds.y );
-			var p2 = cellCoords( bounds.right, bounds.bottom );
+			var p2 = cellCoords( bounds.Right, bounds.Bottom );
 
 			// update our bounds to keep track of our grid size
 			if( !gridBounds.Contains( p1 ) )
@@ -141,7 +141,7 @@ namespace Nez.Spatial
 		{
 			var bounds = collider.registeredPhysicsBounds;
 			var p1 = cellCoords( bounds.x, bounds.y );
-			var p2 = cellCoords( bounds.right, bounds.bottom );
+			var p2 = cellCoords( bounds.Right, bounds.Bottom );
 
 			for( var x = p1.X; x <= p2.X; x++ )
 			{
@@ -227,7 +227,7 @@ namespace Nez.Spatial
 			_tempHashset.Clear();
 
 			var p1 = cellCoords( bounds.x, bounds.y );
-			var p2 = cellCoords( bounds.right, bounds.bottom );
+			var p2 = cellCoords( bounds.Right, bounds.Bottom );
 
 			for( var x = p1.X; x <= p2.X; x++ )
 			{
@@ -246,7 +246,7 @@ namespace Nez.Spatial
 						if( collider == excludeCollider || !Flags.isFlagSet( layerMask, collider.physicsLayer ) )
 							continue;
 
-						if( bounds.intersects( collider.bounds ) )
+						if( bounds.Intersects( collider.bounds ) )
 							_tempHashset.Add( collider );
 					}
 				}
@@ -354,7 +354,7 @@ namespace Nez.Spatial
 		public int overlapRectangle( ref RectangleF rect, Collider[] results, int layerMask )
 		{
 			_overlapTestBox.updateBox( rect.width, rect.height );
-			_overlapTestBox.position = rect.location;
+			_overlapTestBox.position = rect.Location;
 
 			var resultCounter = 0;
 			var potentials = aabbBroadphase( ref rect, null, layerMask );
@@ -367,7 +367,7 @@ namespace Nez.Spatial
 				}
 				else if( collider is CircleCollider )
 				{
-					if( Collisions.rectToCircle( ref rect, collider.bounds.center, collider.bounds.width * 0.5f ) )
+					if( Collisions.rectToCircle( ref rect, collider.bounds.Center, collider.bounds.width * 0.5f ) )
 					{
 						results[resultCounter] = collider;
 						resultCounter++;
@@ -591,7 +591,7 @@ namespace Nez.Spatial
 				// TODO: if the bounds check returned more data we wouldnt have to do any more for a BoxCollider check
 				// first a bounds check before doing a shape test
 				var colliderBounds = potential.bounds;
-				if( colliderBounds.rayIntersects( ref _ray, out fraction ) && fraction <= 1.0f )
+				if( colliderBounds.RayIntersects( ref _ray, out fraction ) && fraction <= 1.0f )
 				{
 					if( potential.shape.collidesWithLine( _ray.start, _ray.end, out _tempHit ) )
 					{

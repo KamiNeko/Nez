@@ -13,13 +13,13 @@
 
 		public override void render( Scene scene )
 		{
-			var cam = camera ?? scene.camera;
+			var cam = camera ?? scene.Camera;
 			beginRender( cam );
 
-			for( var i = 0; i < scene.renderableComponents.count; i++ )
+			for( var i = 0; i < scene.RenderableComponents.count; i++ )
 			{
-				var renderable = scene.renderableComponents[i];
-				if( renderable.enabled && renderable.isVisibleFromCamera( cam ) )
+				var renderable = scene.RenderableComponents[i];
+				if( renderable.Enabled && renderable.IsVisibleFromCamera( cam ) )
 					renderAfterStateCheck( renderable, cam );
 			}
 				

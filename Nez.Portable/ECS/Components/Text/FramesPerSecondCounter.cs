@@ -6,7 +6,7 @@ using Nez.BitmapFonts;
 
 namespace Nez
 {
-	public class FramesPerSecondCounter : Text, IUpdatable
+	public class FramesPerSecondCounter : TextSprite, IUpdatable
 	{
 		public enum FPSDockPosition
 		{
@@ -133,22 +133,22 @@ namespace Nez
 
 			totalFrames++;
 
-			text = string.Format( "FPS: {0:0.00}", averageFramesPerSecond );
+			Text = string.Format( "FPS: {0:0.00}", averageFramesPerSecond );
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// we override render and use position instead of entityPosition. this keeps the text in place even if the entity moves
-			graphics.batcher.drawString( _font, _text, localOffset, color, entity.transform.rotation, origin, entity.transform.scale, spriteEffects, layerDepth );
+			graphics.batcher.drawString( _font, _text, localOffset, Color, Entity.transform.rotation, Origin, Entity.transform.scale, SpriteEffects, layerDepth );
 		}
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			// due to the override of position in render we have to do the same here
-			var rect = bounds;
-			rect.location = localOffset;
+			var rect = Bounds;
+			rect.Location = localOffset;
 			graphics.batcher.drawHollowRect( rect, Color.Yellow );
 		}
 

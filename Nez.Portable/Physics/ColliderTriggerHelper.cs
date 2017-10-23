@@ -90,7 +90,7 @@ namespace Nez
 		void notifyTriggerListeners( Pair<Collider> collisionPair, bool isEntering )
 		{
 			// call the onTriggerEnter method for any relevant components
-			collisionPair.first.entity.getComponents( _tempTriggerList );
+			collisionPair.first.Entity.getComponents( _tempTriggerList );
 			for( var i = 0; i < _tempTriggerList.Count; i++ )
 			{
 				if( isEntering )
@@ -102,7 +102,7 @@ namespace Nez
 			_tempTriggerList.Clear();
 
 			// also call it for the collider we moved onto
-			collisionPair.second.entity.getComponents( _tempTriggerList );
+			collisionPair.second.Entity.getComponents( _tempTriggerList );
 			for( var i = 0; i < _tempTriggerList.Count; i++ )
 			{
 				if( isEntering )

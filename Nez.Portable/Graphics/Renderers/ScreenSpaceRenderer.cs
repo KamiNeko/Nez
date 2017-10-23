@@ -26,11 +26,11 @@ namespace Nez
 
 			for( var i = 0; i < renderLayers.Length; i++ )
 			{
-				var renderables = scene.renderableComponents.componentsWithRenderLayer( renderLayers[i] );
+				var renderables = scene.RenderableComponents.componentsWithRenderLayer( renderLayers[i] );
 				for( var j = 0; j < renderables.length; j++ )
 				{
 					var renderable = renderables.buffer[j];
-					if( renderable.enabled && renderable.isVisibleFromCamera( camera ) )
+					if( renderable.Enabled && renderable.IsVisibleFromCamera( camera ) )
 						renderAfterStateCheck( renderable, camera );
 				}
 			}
@@ -48,7 +48,7 @@ namespace Nez
 
 			// this is a bit of a hack. we maybe should take the Camera in the constructor
 			if( camera == null )
-				camera = Core.scene.createEntity( "screenspace camera" ).addComponent<Camera>();
+				camera = Core.scene.CreateEntity( "screenspace camera" ).addComponent<Camera>();
 		}
 
 	}

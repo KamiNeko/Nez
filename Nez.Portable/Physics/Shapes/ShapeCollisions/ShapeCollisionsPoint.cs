@@ -34,7 +34,7 @@ namespace Nez.PhysicsShapes
 			if( box.containsPoint( point ) )
 			{
 				// get the point in the space of the Box
-				result.point = box.bounds.getClosestPointOnRectangleBorderToPoint( point, out result.normal );
+				result.point = box.bounds.GetClosestPointOnRectangleBorderToPoint( point, out result.normal );
 				result.minimumTranslationVector = point - result.point;
 
 				return true;

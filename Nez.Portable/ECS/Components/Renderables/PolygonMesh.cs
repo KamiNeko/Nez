@@ -13,9 +13,9 @@ namespace Nez
 			var triangulator = new Triangulator();
 			triangulator.triangulate( points, arePointsCCW );
 
-			setVertPositions( points );
-			setTriangles( triangulator.triangleIndices.ToArray() );
-			recalculateBounds( true );
+			SetVertPositions( points );
+			SetTriangles( triangulator.triangleIndices.ToArray() );
+			RecalculateBounds( true );
 		}
 	}
 }

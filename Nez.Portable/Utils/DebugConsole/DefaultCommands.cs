@@ -61,7 +61,7 @@ namespace Nez.Console
 			}
 			else if( entityName != "" )
 			{
-				var entity = Core.scene.findEntity( entityName );
+				var entity = Core.scene.FindEntity( entityName );
 				if( entity == null )
 				{
 					instance.log( "could not find entity named " + entityName );
@@ -85,7 +85,7 @@ namespace Nez.Console
 		static void logLoadedAssets( string whichAssets = "s" )
 		{
 			if( whichAssets == "s" )
-				DebugConsole.instance.log( Core.scene.content.logLoadedAssets() );
+				DebugConsole.instance.log( Core.scene.ContentManager.logLoadedAssets() );
 			else if( whichAssets == "g" )
 				DebugConsole.instance.log( Core.content.logLoadedAssets() );
 			else
@@ -146,9 +146,9 @@ namespace Nez.Console
 			}
 
 			if( tagIndex < 0 )
-				DebugConsole.instance.log( "Total entities: " + Core.scene.entities.count.ToString() );
+				DebugConsole.instance.log( "Total entities: " + Core.scene.Entities.count.ToString() );
 			else
-				DebugConsole.instance.log( "Total entities with tag [" + tagIndex + "] " + Core.scene.findEntitiesWithTag( tagIndex ).Count.ToString() );
+				DebugConsole.instance.log( "Total entities with tag [" + tagIndex + "] " + Core.scene.FindEntitiesWithTag( tagIndex ).Count.ToString() );
 		}
 
 
@@ -162,9 +162,9 @@ namespace Nez.Console
 			}
 
 			if( renderLayer != int.MinValue )
-				DebugConsole.instance.log( "Total renderables with tag [" + renderLayer + "] " + Core.scene.renderableComponents.componentsWithRenderLayer( renderLayer ).length.ToString() );
+				DebugConsole.instance.log( "Total renderables with tag [" + renderLayer + "] " + Core.scene.RenderableComponents.componentsWithRenderLayer( renderLayer ).length.ToString() );
 			else
-				DebugConsole.instance.log( "Total renderables: " + Core.scene.renderableComponents.count.ToString() );
+				DebugConsole.instance.log( "Total renderables: " + Core.scene.RenderableComponents.count.ToString() );
 		}
 
 
@@ -178,10 +178,10 @@ namespace Nez.Console
 			}
 
 			var builder = new StringBuilder();
-			for( var i = 0; i < Core.scene.renderableComponents.count; i++ )
+			for( var i = 0; i < Core.scene.RenderableComponents.count; i++ )
 			{
-				var renderable = Core.scene.renderableComponents[i];
-				if( renderLayer == int.MinValue || renderable.renderLayer == renderLayer )
+				var renderable = Core.scene.RenderableComponents[i];
+				if( renderLayer == int.MinValue || renderable.RenderLayer == renderLayer )
 					builder.AppendFormat( "{0}\n", renderable );
 			}
 
@@ -199,8 +199,8 @@ namespace Nez.Console
 			}
 
 			var builder = new StringBuilder();
-			for( var i = 0; i < Core.scene.entities.count; i++ )
-				builder.AppendLine( Core.scene.entities[i].ToString() );
+			for( var i = 0; i < Core.scene.Entities.count; i++ )
+				builder.AppendLine( Core.scene.Entities[i].ToString() );
 
 			DebugConsole.instance.log( builder.ToString() );
 		}

@@ -190,7 +190,7 @@ namespace Nez
 					entity.scene = null;
 
 					if( Core.entitySystemsEnabled )
-						scene.entityProcessors.onEntityRemoved( entity );
+						scene.EntityProcessors.onEntityRemoved( entity );
 				}
 
 				_tempEntityList.Clear();
@@ -211,7 +211,7 @@ namespace Nez
 					addToTagList( entity );
 
 					if( Core.entitySystemsEnabled )
-						scene.entityProcessors.onEntityAdded( entity );
+						scene.EntityProcessors.onEntityAdded( entity );
 				}
 
 				// now that all entities are added to the scene, we loop through again and call onAddedToScene

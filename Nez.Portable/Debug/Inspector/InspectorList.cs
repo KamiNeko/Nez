@@ -45,14 +45,14 @@ namespace Nez
 				_enabledCheckbox.programmaticChangeEvents = false;
 
 				if( target is Component )
-					_enabledCheckbox.isChecked = ( (Component)target ).enabled;
+					_enabledCheckbox.isChecked = ( (Component)target ).Enabled;
 				else if( target is PostProcessor )
 					_enabledCheckbox.isChecked = ((PostProcessor)target ).enabled;
 				
 				_enabledCheckbox.onChanged += newValue =>
 				{
 					if( target is Component )
-						((Component)target).enabled = newValue;
+						((Component)target).Enabled = newValue;
 					else if( target is PostProcessor )
 						( (PostProcessor)target ).enabled = newValue;
 				};

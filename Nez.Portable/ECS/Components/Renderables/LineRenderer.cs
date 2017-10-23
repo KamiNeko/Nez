@@ -35,10 +35,10 @@ namespace Nez
 			Smooth
 		}
 
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			// we calculate bounds in update so no need to mess with anything here
-			get { return _bounds; }
+			get { return bounds; }
 		}
 
 		/// <summary>
@@ -353,7 +353,7 @@ namespace Nez
 		public LineRenderer clearPoints()
 		{
 			_points.reset();
-			_bounds = RectangleF.empty;
+			bounds = RectangleF.Empty;
 			return this;
 		}
 
@@ -393,10 +393,10 @@ namespace Nez
 				minY = Mathf.minOf( minY, _points.buffer[i].position.Y - halfMaxWidth, _points.buffer[i + 1].position.Y - halfMaxWidth );
 			}
 
-			_bounds.x = minX;
-			_bounds.y = minY;
-			_bounds.width = maxX - minX;
-			_bounds.height = maxY - minY;
+			bounds.x = minX;
+			bounds.y = minY;
+			bounds.width = maxX - minX;
+			bounds.height = maxY - minY;
 
 			// special case: single segment
 			if( _points.length == 2 )
@@ -784,9 +784,9 @@ namespace Nez
 
 		#region Component/RenderableComponent
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			_basicEffect = entity.scene.content.loadMonoGameEffect<BasicEffect>();
+			_basicEffect = Entity.scene.ContentManager.loadMonoGameEffect<BasicEffect>();
 			_basicEffect.World = Matrix.Identity;
 			_basicEffect.VertexColorEnabled = true;
 
@@ -799,24 +799,24 @@ namespace Nez
 		}
 
 
-		public override void onEntityTransformChanged( Transform.Component comp )
+		public override void OnEntityTransformChanged( Transform.Component comp )
 		{
 			// we dont care if the transform changed if we are in world space
 			if( useWorldSpace )
 				return;
 
-			_bounds.calculateBounds( entity.transform.position, _localOffset, Vector2.Zero, entity.transform.scale, entity.transform.rotation, width, height );
+			bounds.CalculateBounds( Entity.transform.position, localOffset, Vector2.Zero, Entity.transform.scale, Entity.transform.rotation, Width, Height );
 		}
 
 
-		public override bool isVisibleFromCamera( Camera camera )
+		public override bool IsVisibleFromCamera( Camera camera )
 		{
 			calculateVertices();
-			return base.isVisibleFromCamera( camera );
+			return base.IsVisibleFromCamera( camera );
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			if( _points.length < 2 )
 				return;
@@ -826,7 +826,7 @@ namespace Nez
 			_basicEffect.CurrentTechnique.Passes[0].Apply();
 
 			if( !useWorldSpace )
-				_basicEffect.World = transform.localToWorldTransform;
+				_basicEffect.World = Transform.localToWorldTransform;
 
 			var primitiveCount = _indices.length / 3;
 			Core.graphicsDevice.SamplerStates[0] = Core.defaultWrappedSamplerState;
@@ -834,7 +834,7 @@ namespace Nez
 		}
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			for( var i = 0; i < _vertices.length; i++ )
 			{
@@ -842,7 +842,7 @@ namespace Nez
 				graphics.batcher.drawPixel( v.Position.X, v.Position.Y, Color.GhostWhite, 4 );
 			}
 
-			graphics.batcher.drawHollowRect( _bounds, Debug.Colors.colliderBounds );
+			graphics.batcher.drawHollowRect( bounds, Debug.Colors.colliderBounds );
 		}
 
 		#endregion

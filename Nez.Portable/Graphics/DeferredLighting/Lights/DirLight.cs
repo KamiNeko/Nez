@@ -10,7 +10,7 @@ namespace Nez.DeferredLighting
 	public class DirLight : DeferredLight
 	{
 		// dir lights are infinite so bounds should be as well
-		public override RectangleF bounds { get { return _bounds; } }
+		public override RectangleF Bounds { get { return bounds; } }
 
 		/// <summary>
 		/// direction of the light
@@ -30,13 +30,13 @@ namespace Nez.DeferredLighting
 
 		public DirLight()
 		{
-			_bounds = RectangleF.maxRect;
+			bounds = RectangleF.MaxRect;
 		}
 
 
 		public DirLight( Color color ) : this()
 		{
-			this.color = color;
+			this.Color = color;
 		}
 
 
@@ -71,7 +71,7 @@ namespace Nez.DeferredLighting
 		/// we dont want to render our bounds so we just render a direction
 		/// </summary>
 		/// <param name="graphics">Graphics.</param>
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			// figure out a starting corner for the line
 			var root = Vector2.Zero;

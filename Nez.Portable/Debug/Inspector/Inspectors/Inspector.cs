@@ -167,6 +167,7 @@ namespace Nez
 		static Inspector getMaterialInspector( object target )
 		{
 			var materialProp = ReflectionUtils.getPropertyInfo( target, "material" );
+            if (materialProp == null) return null;
 			var materialMethod = ReflectionUtils.getPropertyGetter( materialProp );
 			var material = materialMethod.Invoke( target, new object[] { } ) as Material;
 			if( material == null || material.effect == null )

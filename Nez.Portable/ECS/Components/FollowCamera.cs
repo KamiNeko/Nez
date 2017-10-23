@@ -64,10 +64,10 @@ namespace Nez
 		{}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
 			if( camera == null )
-				camera = entity.scene.camera;
+				camera = Entity.scene.Camera;
 
 			follow( _targetEntity, _cameraStyle );
 
@@ -76,7 +76,7 @@ namespace Nez
 		}
 
 
-		public override void onRemovedFromEntity()
+		public override void OnRemovedFromEntity()
 		{
 			Core.emitter.removeObserver( CoreEvents.GraphicsDeviceReset, onGraphicsDeviceReset );
 		}
@@ -85,7 +85,7 @@ namespace Nez
 		void IUpdatable.update()
 		{
 			// translate the deadzone to be in world space
-			var halfScreen = entity.scene.sceneRenderTargetSize.ToVector2() * 0.5f;
+			var halfScreen = Entity.scene.SceneRenderTargetSize.ToVector2() * 0.5f;
 			_worldSpaceDeadzone.x = camera.position.X - halfScreen.X + deadzone.x + focusOffset.X;
 			_worldSpaceDeadzone.y = camera.position.Y - halfScreen.Y + deadzone.y + focusOffset.Y;
 			_worldSpaceDeadzone.width = deadzone.width;
@@ -95,12 +95,12 @@ namespace Nez
 				updateFollow();
 
 			camera.position = Vector2.Lerp( camera.position, camera.position + _desiredPositionDelta, followLerp );
-			camera.entity.transform.roundPosition();
+			camera.Entity.transform.roundPosition();
 
 			if( mapLockEnabled )
 			{
 				camera.position = clampToMapSize( camera.position );
-				camera.entity.transform.roundPosition();   
+				camera.Entity.transform.roundPosition();   
 			}
 		}
 
@@ -119,7 +119,7 @@ namespace Nez
 		}
 
 
-        public override void debugRender( Graphics graphics )
+        public override void DebugRender( Graphics graphics )
 		{
 			if( _cameraStyle == CameraStyle.LockOn )
 				graphics.batcher.drawHollowRect( _worldSpaceDeadzone.x - 5, _worldSpaceDeadzone.y - 5, _worldSpaceDeadzone.width, _worldSpaceDeadzone.height, Color.DarkRed );
@@ -171,19 +171,19 @@ namespace Nez
 				}
 				
 				var targetBounds = _targetEntity.getComponent<Collider>().bounds;
-				if( !_worldSpaceDeadzone.contains( targetBounds ) )
+				if( !_worldSpaceDeadzone.Contains( targetBounds ) )
 				{
 					// x-axis
-					if( _worldSpaceDeadzone.left > targetBounds.left )
-						_desiredPositionDelta.X = targetBounds.left - _worldSpaceDeadzone.left;
-					else if( _worldSpaceDeadzone.right < targetBounds.right )
-						_desiredPositionDelta.X = targetBounds.right - _worldSpaceDeadzone.right;
+					if( _worldSpaceDeadzone.Left > targetBounds.Left )
+						_desiredPositionDelta.X = targetBounds.Left - _worldSpaceDeadzone.Left;
+					else if( _worldSpaceDeadzone.Right < targetBounds.Right )
+						_desiredPositionDelta.X = targetBounds.Right - _worldSpaceDeadzone.Right;
 
 					// y-axis
-					if( _worldSpaceDeadzone.bottom < targetBounds.bottom )
-						_desiredPositionDelta.Y = targetBounds.bottom - _worldSpaceDeadzone.bottom;
-					else if( _worldSpaceDeadzone.top > targetBounds.top )
-						_desiredPositionDelta.Y = targetBounds.top - _worldSpaceDeadzone.top;
+					if( _worldSpaceDeadzone.Bottom < targetBounds.Bottom )
+						_desiredPositionDelta.Y = targetBounds.Bottom - _worldSpaceDeadzone.Bottom;
+					else if( _worldSpaceDeadzone.Top > targetBounds.Top )
+						_desiredPositionDelta.Y = targetBounds.Top - _worldSpaceDeadzone.Top;
 				}
 			}
 		}

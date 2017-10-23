@@ -18,13 +18,13 @@
 
 		public override void render( Scene scene )
 		{
-			var cam = camera ?? scene.camera;
+			var cam = camera ?? scene.Camera;
 			beginRender( cam );
 
-			for( var i = 0; i < scene.renderableComponents.count; i++ )
+			for( var i = 0; i < scene.RenderableComponents.count; i++ )
 			{
-				var renderable = scene.renderableComponents[i];
-				if( !excludedRenderLayers.contains( renderable.renderLayer ) && renderable.enabled && renderable.isVisibleFromCamera( cam ) )
+				var renderable = scene.RenderableComponents[i];
+				if( !excludedRenderLayers.contains( renderable.RenderLayer ) && renderable.Enabled && renderable.IsVisibleFromCamera( cam ) )
 					renderAfterStateCheck( renderable, cam );
 			}
 
@@ -39,11 +39,11 @@
 		{
 			base.debugRender( scene, cam );
 
-			for( var i = 0; i < scene.renderableComponents.count; i++ )
+			for( var i = 0; i < scene.RenderableComponents.count; i++ )
 			{
-				var renderable = scene.renderableComponents[i];
-				if( !excludedRenderLayers.contains( renderable.renderLayer ) && renderable.enabled && renderable.isVisibleFromCamera( cam ) )
-					renderable.debugRender( Graphics.instance );
+				var renderable = scene.RenderableComponents[i];
+				if( !excludedRenderLayers.contains( renderable.RenderLayer ) && renderable.Enabled && renderable.IsVisibleFromCamera( cam ) )
+					renderable.DebugRender( Graphics.instance );
 			}
 		}
 

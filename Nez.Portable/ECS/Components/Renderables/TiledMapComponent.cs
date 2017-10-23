@@ -17,8 +17,8 @@ namespace Nez
 		/// </summary>
 		public int[] layerIndicesToRender;
 
-		public override float width { get { return tiledMap.width * tiledMap.tileWidth; } }
-		public override float height { get { return tiledMap.height * tiledMap.tileHeight; } }
+		public override float Width { get { return tiledMap.width * tiledMap.tileWidth; } }
+		public override float Height { get { return tiledMap.height * tiledMap.tileHeight; } }
 
 		public TiledTileLayer collisionLayer;
 
@@ -64,14 +64,14 @@ namespace Nez
 
 		public int getRowAtWorldPosition( float yPos )
 		{
-			yPos -= entity.transform.position.Y + _localOffset.Y;
+			yPos -= Entity.transform.position.Y + localOffset.Y;
 			return tiledMap.worldToTilePositionY( yPos );
 		}
 
 
 		public int getColumnAtWorldPosition( float xPos )
 		{
-			xPos -= entity.transform.position.X + _localOffset.X;
+			xPos -= Entity.transform.position.X + localOffset.X;
 			return tiledMap.worldToTilePositionY( xPos );
 		}
 
@@ -86,7 +86,7 @@ namespace Nez
 			Assert.isNotNull( collisionLayer, "collisionLayer must not be null!" );
 
 			// offset the passed in world position to compensate for the entity position
-			worldPos -= entity.transform.position + _localOffset;
+			worldPos -= Entity.transform.position + localOffset;
 			return collisionLayer.getTileAtWorldPosition( worldPos );
 		}
 
@@ -102,7 +102,7 @@ namespace Nez
 			Assert.isNotNull( collisionLayer, "collisionLayer must not be null!" );
 
 			// offset the passed in world position to compensate for the entity position
-			bounds.Location -= ( entity.transform.position + _localOffset ).ToPoint();
+			bounds.Location -= ( Entity.transform.position + localOffset ).ToPoint();
 			return collisionLayer.getTilesIntersectingBounds( bounds );
 		}
 
@@ -111,7 +111,7 @@ namespace Nez
 
 		#region Component overrides
 
-		public override void onEntityTransformChanged( Transform.Component comp )
+		public override void OnEntityTransformChanged( Transform.Component comp )
 		{
 			// we only deal with positional changes here. TiledMaps cant be scaled.
 			if( _shouldCreateColliders && comp == Transform.Component.Position )
@@ -122,13 +122,13 @@ namespace Nez
 		}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
 			addColliders();
 		}
 
 
-		public override void onRemovedFromEntity()
+		public override void OnRemovedFromEntity()
 		{
 			removeColliders();
 		}
@@ -140,24 +140,24 @@ namespace Nez
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			if( layerIndicesToRender == null )
 			{
-				tiledMap.draw( graphics.batcher, entity.transform.position + _localOffset, layerDepth, camera.bounds );
+				tiledMap.draw( graphics.batcher, Entity.transform.position + localOffset, layerDepth, camera.bounds );
 			}
 			else
 			{
 				for( var i = 0; i < tiledMap.layers.Count; i++ )
 				{
 					if( tiledMap.layers[i].visible && layerIndicesToRender.contains( i ) )
-						tiledMap.layers[i].draw( graphics.batcher, entity.transform.position + _localOffset, layerDepth, camera.bounds );
+						tiledMap.layers[i].draw( graphics.batcher, Entity.transform.position + localOffset, layerDepth, camera.bounds );
 				}
 			}
 		}
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			foreach( var group in tiledMap.objectGroups )
 				renderObjectGroup( group, graphics );
@@ -165,7 +165,7 @@ namespace Nez
 			if( _colliders != null )
 			{
 				foreach( var collider in _colliders )
-					collider.debugRender( graphics );
+					collider.DebugRender( graphics );
 			}
 		}
 
@@ -186,9 +186,9 @@ namespace Nez
 			_colliders = new Collider[collisionRects.Count];
 			for( var i = 0; i < collisionRects.Count; i++ )
 			{
-				var collider = new BoxCollider( collisionRects[i].X + _localOffset.X, collisionRects[i].Y + _localOffset.Y, collisionRects[i].Width, collisionRects[i].Height );
+				var collider = new BoxCollider( collisionRects[i].X + localOffset.X, collisionRects[i].Y + localOffset.Y, collisionRects[i].Width, collisionRects[i].Height );
 				collider.physicsLayer = physicsLayer;
-				collider.entity = entity;
+				collider.Entity = Entity;
 				_colliders[i] = collider;
 
 				Physics.addCollider( collider );
@@ -213,7 +213,7 @@ namespace Nez
 
 		void renderObjectGroup( TiledObjectGroup group, Graphics graphics )
 		{
-			var renderPosition = entity.transform.position + _localOffset;
+			var renderPosition = Entity.transform.position + localOffset;
 
 			foreach( var obj in group.objects )
 			{

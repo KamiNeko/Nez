@@ -265,14 +265,14 @@ namespace Nez
 		{
 			PointSectors sector = PointSectors.Center;
 
-			if( point.X < rect.left )
+			if( point.X < rect.Left )
 				sector |= PointSectors.Left;
-			else if( point.X >= rect.right )
+			else if( point.X >= rect.Right )
 				sector |= PointSectors.Right;
 
-			if( point.Y < rect.top )
+			if( point.Y < rect.Top )
 				sector |= PointSectors.Top;
-			else if( point.Y >= rect.bottom )
+			else if( point.Y >= rect.Bottom )
 				sector |= PointSectors.Bottom;
 
 			return sector;

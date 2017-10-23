@@ -62,10 +62,10 @@ namespace Nez
 		float originalIntensity;
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			_spriteRenderer = entity.getComponent<RenderableComponent>();
-			originalColor = _spriteRenderer.color;
+			_spriteRenderer = Entity.getComponent<RenderableComponent>();
+			originalColor = _spriteRenderer.Color;
 			originalIntensity = originalColor.A;
 		}
 
@@ -73,7 +73,7 @@ namespace Nez
 
 		void IUpdatable.update()
 		{
-			var color = _spriteRenderer.color;
+			var color = _spriteRenderer.Color;
 
 			switch( colorChannel )
 			{
@@ -96,7 +96,7 @@ namespace Nez
 			else
 				color.A = originalColor.A;
 
-			_spriteRenderer.color = color;
+			_spriteRenderer.Color = color;
 		}
 
 

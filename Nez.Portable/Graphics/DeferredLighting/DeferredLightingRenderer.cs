@@ -116,21 +116,21 @@ namespace Nez.DeferredLighting
 		{
 			for( var i = 0; i < renderLayers.Length; i++ )
 			{
-				var renderables = scene.renderableComponents.componentsWithRenderLayer( renderLayers[i] );
+				var renderables = scene.RenderableComponents.componentsWithRenderLayer( renderLayers[i] );
 				for( var j = 0; j < renderables.length; j++ )
 				{
 					var renderable = renderables.buffer[j];
-					if( renderable.enabled && renderable.isVisibleFromCamera( cam ) )
-						renderable.debugRender( Graphics.instance );
+					if( renderable.Enabled && renderable.IsVisibleFromCamera( cam ) )
+						renderable.DebugRender( Graphics.instance );
 				}
 			}
 
-			var lightRenderables = scene.renderableComponents.componentsWithRenderLayer( _lightLayer );
+			var lightRenderables = scene.RenderableComponents.componentsWithRenderLayer( _lightLayer );
 			for( var j = 0; j < lightRenderables.length; j++ )
 			{
 				var renderable = lightRenderables.buffer[j];
-				if( renderable.enabled && renderable.isVisibleFromCamera( cam ) )
-					renderable.debugRender( Graphics.instance );
+				if( renderable.Enabled && renderable.IsVisibleFromCamera( cam ) )
+					renderable.DebugRender( Graphics.instance );
 			}
 		}
 
@@ -183,21 +183,21 @@ namespace Nez.DeferredLighting
 
 		void renderSprites( Scene scene )
 		{
-			beginRender( scene.camera );
+			beginRender( scene.Camera );
 
 			for( var i = 0; i < renderLayers.Length; i++ )
 			{
-				var renderables = scene.renderableComponents.componentsWithRenderLayer( renderLayers[i] );
+				var renderables = scene.RenderableComponents.componentsWithRenderLayer( renderLayers[i] );
 				for( var j = 0; j < renderables.length; j++ )
 				{
 					var renderable = renderables.buffer[j];
-					if( renderable.enabled && renderable.isVisibleFromCamera( scene.camera ) )
-						renderAfterStateCheck( renderable, scene.camera );
+					if( renderable.Enabled && renderable.IsVisibleFromCamera( scene.Camera ) )
+						renderAfterStateCheck( renderable, scene.Camera );
 				}
 			}
 
 			if( shouldDebugRender && Core.debugRenderEnabled )
-				debugRender( scene, scene.camera );
+				debugRender( scene, scene.Camera );
 
 			endRender();
 		}
@@ -207,22 +207,22 @@ namespace Nez.DeferredLighting
 		{
 			// bind the normalMap and update the Effect with our camera
 			_lightEffect.setNormalMap( normalRT );
-			_lightEffect.updateForCamera( scene.camera );
+			_lightEffect.updateForCamera( scene.Camera );
 
 			Core.graphicsDevice.setRenderTarget( lightRT );
 			Core.graphicsDevice.Clear( Color.Transparent );
 			Core.graphicsDevice.BlendState = BlendState.Additive;
 			Core.graphicsDevice.DepthStencilState = DepthStencilState.None;
 
-			var renderables = scene.renderableComponents.componentsWithRenderLayer( _lightLayer );
+			var renderables = scene.RenderableComponents.componentsWithRenderLayer( _lightLayer );
 			for( var i = 0; i < renderables.length; i++ )
 			{
 				Assert.isTrue( renderables.buffer[i] is DeferredLight, "Found a Renderable in the lightLayer that is not a DeferredLight!" );
 				var renderable = renderables.buffer[i];
-				if( renderable.enabled )
+				if( renderable.Enabled )
 				{
 					var light = renderable as DeferredLight;
-					if( light is DirLight || light.isVisibleFromCamera( scene.camera ) )
+					if( light is DirLight || light.IsVisibleFromCamera( scene.Camera ) )
 						renderLight( light );
 				}
 			}
@@ -231,7 +231,7 @@ namespace Nez.DeferredLighting
 
 		void renderFinalCombine( Scene scene )
 		{
-			Core.graphicsDevice.setRenderTarget( scene.sceneRenderTarget );
+			Core.graphicsDevice.setRenderTarget( scene.SceneRenderTarget );
 			Core.graphicsDevice.BlendState = BlendState.Opaque;
 			Core.graphicsDevice.DepthStencilState = DepthStencilState.None;
 
@@ -243,7 +243,7 @@ namespace Nez.DeferredLighting
 
 		void renderAllBuffers( Scene scene )
 		{
-			var tempRT = RenderTarget.getTemporary( scene.sceneRenderTarget.Width, scene.sceneRenderTarget.Height );
+			var tempRT = RenderTarget.getTemporary( scene.SceneRenderTarget.Width, scene.SceneRenderTarget.Height );
 
 			Core.graphicsDevice.setRenderTarget( tempRT );
 
@@ -254,10 +254,10 @@ namespace Nez.DeferredLighting
 			Graphics.instance.batcher.draw( lightRT, new Rectangle( 0, 0, halfWidth, halfHeight ) );
 			Graphics.instance.batcher.draw( diffuseRT, new Rectangle( halfWidth, 0, halfWidth, halfHeight ) );
 			Graphics.instance.batcher.draw( normalRT, new Rectangle( 0, halfHeight, halfWidth, halfHeight ) );
-			Graphics.instance.batcher.draw( scene.sceneRenderTarget, new Rectangle( halfWidth, halfHeight, halfWidth, halfHeight ) );
+			Graphics.instance.batcher.draw( scene.SceneRenderTarget, new Rectangle( halfWidth, halfHeight, halfWidth, halfHeight ) );
 			Graphics.instance.batcher.end();
 
-			Core.graphicsDevice.setRenderTarget( scene.sceneRenderTarget );
+			Core.graphicsDevice.setRenderTarget( scene.SceneRenderTarget );
 			Graphics.instance.batcher.begin( BlendState.Opaque );
 			Graphics.instance.batcher.draw( tempRT, Vector2.Zero );
 			Graphics.instance.batcher.end();

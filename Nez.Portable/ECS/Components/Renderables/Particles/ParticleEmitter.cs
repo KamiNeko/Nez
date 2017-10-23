@@ -7,7 +7,7 @@ namespace Nez.Particles
 {
 	public class ParticleEmitter : RenderableComponent, IUpdatable
 	{
-		public override RectangleF bounds { get { return _bounds; } }
+		public override RectangleF Bounds { get { return bounds; } }
 
 		public bool isPaused { get { return _isPaused; } }
 		public bool isPlaying { get { return _active && !_isPaused; } }
@@ -78,13 +78,13 @@ namespace Nez.Particles
 			blendState.ColorSourceBlend = blendState.AlphaSourceBlend = _emitterConfig.blendFuncSource;
 			blendState.ColorDestinationBlend = blendState.AlphaDestinationBlend = _emitterConfig.blendFuncDestination;
 
-			material = new Material( blendState );
+			Material = new Material( blendState );
 		}
 
 
 		#region Component/RenderableComponent
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
 			if( _playOnAwake )
 				play();
@@ -97,7 +97,7 @@ namespace Nez.Particles
 				return;
 
 			// prep data for the particle.update method
-			var rootPosition = entity.transform.position + _localOffset;
+			var rootPosition = Entity.transform.position + localOffset;
 			
 			// if the emitter is active and the emission rate is greater than zero then emit particles
 			if( _active && _emitterConfig.emissionRate > 0 )
@@ -153,29 +153,29 @@ namespace Nez.Particles
 				}
 			}
 
-			_bounds.location = min;
-			_bounds.width = max.X - min.X;
-			_bounds.height = max.Y - min.Y;
+			bounds.Location = min;
+			bounds.width = max.X - min.X;
+			bounds.height = max.Y - min.Y;
 
 			if( _emitterConfig.subtexture == null )
 			{
-				_bounds.inflate( 1 * maxParticleSize, 1 * maxParticleSize );
+				bounds.Inflate( 1 * maxParticleSize, 1 * maxParticleSize );
 			}
 			else
 			{
 				maxParticleSize /= _emitterConfig.subtexture.sourceRect.Width;
-				_bounds.inflate( _emitterConfig.subtexture.sourceRect.Width * maxParticleSize, _emitterConfig.subtexture.sourceRect.Height * maxParticleSize );
+				bounds.Inflate( _emitterConfig.subtexture.sourceRect.Width * maxParticleSize, _emitterConfig.subtexture.sourceRect.Height * maxParticleSize );
 			}
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// we still render when we are paused
 			if( !_active && !_isPaused )
 				return;
 
-			var rootPosition = entity.transform.position + _localOffset;
+			var rootPosition = Entity.transform.position + localOffset;
 
 			// loop through all the particles updating their location and color
 			for( var i = 0; i < _particles.Count; i++ )
@@ -253,7 +253,7 @@ namespace Nez.Particles
 		/// <param name="count">Count.</param>
 		public void emit( int count )
 		{
-			var rootPosition = entity.transform.position + _localOffset;
+			var rootPosition = Entity.transform.position + localOffset;
 
 			init();
 			_active = true;

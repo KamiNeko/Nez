@@ -46,8 +46,8 @@ namespace Nez
 		/// <value>The position.</value>
 		public Vector2 position
 		{
-			get { return entity.transform.position; }
-			set { entity.transform.position = value; }
+			get { return Entity.transform.position; }
+			set { Entity.transform.position = value; }
 		}
 
 		/// <summary>
@@ -56,8 +56,8 @@ namespace Nez
 		/// <value>The rotation.</value>
 		public float rotation
 		{
-			get { return entity.transform.rotation; }
-			set { entity.transform.rotation = value; }
+			get { return Entity.transform.rotation; }
+			set { Entity.transform.rotation = value; }
 		}
 
 		/// <summary>
@@ -133,7 +133,7 @@ namespace Nez
 					var topLeft = screenToWorldPoint( new Vector2( Core.graphicsDevice.Viewport.X + _inset.left, Core.graphicsDevice.Viewport.Y + _inset.top ) );
 					var bottomRight = screenToWorldPoint( new Vector2( Core.graphicsDevice.Viewport.X + Core.graphicsDevice.Viewport.Width - _inset.right, Core.graphicsDevice.Viewport.Y + Core.graphicsDevice.Viewport.Height - _inset.bottom ) );
 
-					if ( entity.transform.rotation != 0 )
+					if ( Entity.transform.rotation != 0 )
 					{
 						// special care for rotated bounds. we need to find our absolute min/max values and create the bounds from that
 						var topRight = screenToWorldPoint( new Vector2( Core.graphicsDevice.Viewport.X + Core.graphicsDevice.Viewport.Width - _inset.right, Core.graphicsDevice.Viewport.Y + _inset.top ) );
@@ -144,13 +144,13 @@ namespace Nez
 						var minY = Mathf.minOf( topLeft.Y, bottomRight.Y, topRight.Y, bottomLeft.Y );
 						var maxY = Mathf.maxOf( topLeft.Y, bottomRight.Y, topRight.Y, bottomLeft.Y );
 
-						_bounds.location = new Vector2( minX, minY );
+						_bounds.Location = new Vector2( minX, minY );
 						_bounds.width = maxX - minX;
 						_bounds.height = maxY - minY;
 					}
 					else
 					{
-						_bounds.location = topLeft;
+						_bounds.Location = topLeft;
 						_bounds.width = bottomRight.X - topLeft.X;
 						_bounds.height = bottomRight.Y - topLeft.Y;
 					}
@@ -294,7 +294,7 @@ namespace Nez
 			origin = new Vector2( newWidth / 2f, newHeight / 2f );
 
 			// offset our position to match the new center
-			entity.transform.position += ( _origin - oldOrigin );
+			Entity.transform.position += ( _origin - oldOrigin );
 		}
 
 
@@ -304,7 +304,7 @@ namespace Nez
 				return;
 
 			Matrix2D tempMat;
-			_transformMatrix = Matrix2D.createTranslation( -entity.transform.position.X, -entity.transform.position.Y ); // position
+			_transformMatrix = Matrix2D.createTranslation( -Entity.transform.position.X, -Entity.transform.position.Y ); // position
 
 			if( _zoom != 1f )
 			{
@@ -312,9 +312,9 @@ namespace Nez
 				Matrix2D.multiply( ref _transformMatrix, ref tempMat, out _transformMatrix );
 			}
 
-			if( entity.transform.rotation != 0f )
+			if( Entity.transform.rotation != 0f )
 			{
-				Matrix2D.createRotation( entity.transform.rotation, out tempMat ); // rotation
+				Matrix2D.createRotation( Entity.transform.rotation, out tempMat ); // rotation
 				Matrix2D.multiply( ref _transformMatrix, ref tempMat, out _transformMatrix );
 			}
 
@@ -353,7 +353,7 @@ namespace Nez
 		/// <param name="position">Position.</param>
 		public Camera setPosition( Vector2 position )
 		{
-			entity.transform.setPosition( position );
+			Entity.transform.setPosition( position );
 			return this;
 		}
 
@@ -364,7 +364,7 @@ namespace Nez
 		/// <param name="radians">Radians.</param>
 		public Camera setRotation( float radians )
 		{
-			entity.transform.setRotation( radians );
+			Entity.transform.setRotation( radians );
 			return this;
 		}
 
@@ -375,7 +375,7 @@ namespace Nez
 		/// <param name="degrees">Degrees.</param>
 		public Camera setRotationDegrees( float degrees )
 		{
-			entity.transform.setRotationDegrees( degrees );
+			Entity.transform.setRotationDegrees( degrees );
 			return this;
 		}
 
@@ -446,7 +446,7 @@ namespace Nez
 
 		#region component overrides
 
-		public override void onEntityTransformChanged( Transform.Component comp )
+		public override void OnEntityTransformChanged( Transform.Component comp )
 		{
 			forceMatrixUpdate();
 		}

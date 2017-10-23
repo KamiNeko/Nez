@@ -27,8 +27,8 @@ namespace Nez
 	/// </summary>
 	public class MarkupText : RenderableComponent
 	{
-		public override float width { get { return _textWidth; } }
-		public override float height { get { return _textHeight; } }
+		public override float Width { get { return _textWidth; } }
+		public override float Height { get { return _textHeight; } }
 
 		public string text { get { return _text; } }
 		public float textWidth { get { return _textWidth; } }
@@ -123,13 +123,13 @@ namespace Nez
 		/// </summary>
 		/// <param name="graphics">Graphics.</param>
 		/// <param name="camera">Camera.</param>
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			if( _compiledMarkup == null )
 				return;
 			
 			for( var i = 0; i < _compiledMarkup.Count; i++ )
-				_compiledMarkup[i].render( graphics, transform.position + _localOffset );
+				_compiledMarkup[i].render( graphics, Transform.position + localOffset );
 		}
 
 

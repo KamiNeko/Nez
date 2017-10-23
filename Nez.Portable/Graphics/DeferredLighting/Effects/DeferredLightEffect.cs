@@ -138,12 +138,12 @@ namespace Nez.DeferredLighting
 		/// <param name="light">Light.</param>
 		public void updateForLight( PointLight light )
 		{
-			setLightPosition( new Vector3( light.entity.transform.position + light.localOffset, light.zPosition ) );
-			setColor( light.color );
-			setLightRadius( light.radius * light.entity.transform.scale.X );
+			setLightPosition( new Vector3( light.Entity.transform.position + light.LocalOffset, light.zPosition ) );
+			setColor( light.Color );
+			setLightRadius( light.radius * light.Entity.transform.scale.X );
 			setLightIntensity( light.intensity );
 
-			var objToWorld = Matrix.CreateScale( light.radius * light.entity.transform.scale.X ) * Matrix.CreateTranslation( light.entity.transform.position.X + light.localOffset.X, light.entity.transform.position.Y + light.localOffset.Y, 0 );
+			var objToWorld = Matrix.CreateScale( light.radius * light.Entity.transform.scale.X ) * Matrix.CreateTranslation( light.Entity.transform.position.X + light.LocalOffset.X, light.Entity.transform.position.Y + light.LocalOffset.Y, 0 );
 			setObjectToWorldMatrix( objToWorld );
 
 			pointLightPass.Apply();
@@ -170,11 +170,11 @@ namespace Nez.DeferredLighting
 		/// <param name="light">Light.</param>
 		public void updateForLight( AreaLight light )
 		{
-			setColor( light.color );
+			setColor( light.Color );
 			setAreaDirectionalLightDirection( light.direction );
 			setLightIntensity( light.intensity );
 
-			var objToWorld = Matrix.CreateScale( light.bounds.width * light.entity.transform.scale.X, light.bounds.height * light.entity.transform.scale.Y, 1f ) * Matrix.CreateTranslation( light.bounds.x - light.bounds.width * 0.5f, light.bounds.y - light.bounds.height * 0.5f, 0 );
+			var objToWorld = Matrix.CreateScale( light.Bounds.width * light.Entity.transform.scale.X, light.Bounds.height * light.Entity.transform.scale.Y, 1f ) * Matrix.CreateTranslation( light.Bounds.x - light.Bounds.width * 0.5f, light.Bounds.y - light.Bounds.height * 0.5f, 0 );
 			setObjectToWorldMatrix( objToWorld );
 
 			areaLightPass.Apply();
@@ -187,7 +187,7 @@ namespace Nez.DeferredLighting
 		/// <param name="light">Light.</param>
 		public void updateForLight( DirLight light )
 		{
-			setColor( light.color );
+			setColor( light.Color );
 			setAreaDirectionalLightDirection( light.direction );
 			setSpecularPower( light.specularPower );
 			setSpecularIntensity( light.specularIntensity );

@@ -116,14 +116,14 @@ namespace Nez.Shadows
 		/// </summary>        
 		public void addSquareOccluder( RectangleF bounds )
 		{
-			var tr = new Vector2( bounds.right, bounds.top );
-			var bl = new Vector2( bounds.left, bounds.bottom );
-			var br = new Vector2( bounds.right, bounds.bottom );
+			var tr = new Vector2( bounds.Right, bounds.Top );
+			var bl = new Vector2( bounds.Left, bounds.Bottom );
+			var br = new Vector2( bounds.Right, bounds.Bottom );
 
-			addSegment( bounds.location, tr );
+			addSegment( bounds.Location, tr );
 			addSegment( tr, br );
 			addSegment( br, bl );
-			addSegment( bl, bounds.location );
+			addSegment( bl, bounds.Location );
 		}
 
 

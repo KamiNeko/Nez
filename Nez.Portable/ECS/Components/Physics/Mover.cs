@@ -14,9 +14,9 @@ namespace Nez
 		ColliderTriggerHelper _triggerHelper;
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			_triggerHelper = new ColliderTriggerHelper( entity );
+			_triggerHelper = new ColliderTriggerHelper( Entity );
 		}
 
 
@@ -31,14 +31,14 @@ namespace Nez
 			collisionResult = new CollisionResult();
 
 			// no collider? just move and forget about it
-			if( entity.getComponent<Collider>() == null || _triggerHelper == null )
+			if( Entity.getComponent<Collider>() == null || _triggerHelper == null )
 			{
-				entity.transform.position += motion;
+				Entity.transform.position += motion;
 				return false;
 			}
 
 			// 1. move all non-trigger Colliders and get closest collision
-			var colliders = entity.getComponents<Collider>();
+			var colliders = Entity.getComponents<Collider>();
 			for( var i = 0; i < colliders.Count; i++ )
 			{
 				var collider = colliders[i];
@@ -69,7 +69,7 @@ namespace Nez
 			ListPool<Collider>.free( colliders );
 
 			// 2. move entity to its new position if we have a collision else move the full amount. motion is updated when a collision occurs
-			entity.transform.position += motion;
+			Entity.transform.position += motion;
 
 			// 3. do an overlap check of all Colliders that are triggers with all broadphase colliders, triggers or not.
 			//    Any overlaps result in trigger events.

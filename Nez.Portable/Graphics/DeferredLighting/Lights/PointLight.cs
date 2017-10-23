@@ -9,19 +9,19 @@ namespace Nez.DeferredLighting
 	/// </summary>
 	public class PointLight : DeferredLight
 	{
-        public override RectangleF bounds
+        public override RectangleF Bounds
         {
             get
             {
-                if( _areBoundsDirty )
+                if( areBoundsDirty )
                 {
 					// the size of the light only uses the x scale value
-					var size = radius * entity.transform.scale.X * 2;
-                    _bounds.calculateBounds( entity.transform.position, _localOffset, _radius * entity.transform.scale, Vector2.One, 0, size, size );
-                    _areBoundsDirty = false;
+					var size = radius * Entity.transform.scale.X * 2;
+                    bounds.CalculateBounds( Entity.transform.position, localOffset, _radius * Entity.transform.scale, Vector2.One, 0, size, size );
+                    areBoundsDirty = false;
                 }
 
-                return _bounds;
+                return bounds;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Nez.DeferredLighting
 
 		public PointLight( Color color ) : this()
 		{
-			this.color = color;
+			this.Color = color;
 		}
 
 
@@ -71,7 +71,7 @@ namespace Nez.DeferredLighting
 		public PointLight setRadius( float radius )
 		{
 			_radius = radius;
-			_areBoundsDirty = true;
+			areBoundsDirty = true;
 			return this;
 		}
 
@@ -92,9 +92,9 @@ namespace Nez.DeferredLighting
 		/// renders the bounds only if there is no collider. Always renders a square on the origin.
 		/// </summary>
 		/// <param name="graphics">Graphics.</param>
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
-			graphics.batcher.drawCircle( entity.transform.position + _localOffset, radius * entity.transform.scale.X, Color.DarkOrchid, 2 );
+			graphics.batcher.drawCircle( Entity.transform.position + localOffset, radius * Entity.transform.scale.X, Color.DarkOrchid, 2 );
 		}
 
 	}

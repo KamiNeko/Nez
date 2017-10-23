@@ -133,8 +133,8 @@ namespace Nez
 		{
 			if( _debugDrawItems.Count > 0 )
 			{
-				if( Core.scene != null && Core.scene.camera != null )
-					Graphics.instance.batcher.begin( Core.scene.camera.transformMatrix );
+				if( Core.scene != null && Core.scene.Camera != null )
+					Graphics.instance.batcher.begin( Core.scene.Camera.transformMatrix );
 				else
 					Graphics.instance.batcher.begin();
 
@@ -150,7 +150,7 @@ namespace Nez
 
 			if( _screenSpaceDebugDrawItems.Count > 0 )
 			{
-				var pos = drawTextFromBottom ? new Vector2( 0, Core.scene.sceneRenderTargetSize.Y ) : Vector2.Zero;
+				var pos = drawTextFromBottom ? new Vector2( 0, Core.scene.SceneRenderTargetSize.Y ) : Vector2.Zero;
 				Graphics.instance.batcher.begin();
 
 				for( var i = _screenSpaceDebugDrawItems.Count - 1; i >= 0; i-- )

@@ -90,7 +90,7 @@ namespace Nez.Sprites
 		}
 
 
-		public override RectangleF bounds { get { return _bounds; } }
+		public override RectangleF Bounds { get { return bounds; } }
 
 		public int maxSpriteInstances
 		{
@@ -222,7 +222,7 @@ namespace Nez.Sprites
 		{
 			_awaitingDisable = false;
 			_isFirstInstance = true;
-			enabled = true;
+			Enabled = true;
 			return this;
 		}
 
@@ -239,7 +239,7 @@ namespace Nez.Sprites
 			}
 			else
 			{
-				enabled = false;
+				Enabled = false;
 
 				for( var i = 0; i < _liveSpriteTrailInstances.Count; i++ )
 					_availableSpriteTrailInstances.Push( _liveSpriteTrailInstances[i] );
@@ -248,7 +248,7 @@ namespace Nez.Sprites
 		}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
 			if( _sprite == null )
 				_sprite = this.getComponent<Sprite>();
@@ -256,7 +256,7 @@ namespace Nez.Sprites
 			Assert.isNotNull( _sprite, "There is no Sprite on this Entity for the SpriteTrail to use" );
 
 			// move the trail behind the Sprite
-			layerDepth = _sprite.layerDepth + 0.001f;
+			layerDepth = _sprite.LayerDepth + 0.001f;
 
 			// if setMaxSpriteInstances is called it will handle initializing the SpriteTrailInstances so make sure we dont do it twice
 			if( _availableSpriteTrailInstances.Count == 0 )
@@ -276,7 +276,7 @@ namespace Nez.Sprites
 			}
 			else
 			{
-				var distanceMoved = Math.Abs( Vector2.Distance( entity.transform.position + _localOffset, _lastPosition ) );
+				var distanceMoved = Math.Abs( Vector2.Distance( Entity.transform.position + localOffset, _lastPosition ) );
 				if( distanceMoved >= minDistanceBetweenInstances )
 					spawnInstance();
 			}
@@ -300,14 +300,14 @@ namespace Nez.Sprites
 				}
 			}
 
-			_bounds.location = min;
-			_bounds.width = max.X - min.X;
-			_bounds.height = max.Y - min.Y;
-			_bounds.inflate( _sprite.width, _sprite.height );
+			bounds.Location = min;
+			bounds.width = max.X - min.X;
+			bounds.height = max.Y - min.Y;
+			bounds.Inflate( _sprite.Width, _sprite.Height );
 
 			// nothing left to render. disable ourself
 			if( _awaitingDisable && _liveSpriteTrailInstances.Count == 0 )
-				enabled = false;
+				Enabled = false;
 		}
 
 
@@ -316,19 +316,19 @@ namespace Nez.Sprites
 		/// </summary>
 		void spawnInstance()
 		{
-			_lastPosition = _sprite.entity.transform.position + _sprite.localOffset;
+			_lastPosition = _sprite.Entity.transform.position + _sprite.LocalOffset;
 
 			if( _awaitingDisable || _availableSpriteTrailInstances.Count == 0 )
 				return;
 
 			var instance = _availableSpriteTrailInstances.Pop();
-			instance.spawn( _lastPosition, _sprite.subtexture, fadeDuration, fadeDelay, initialColor, fadeToColor );
-			instance.setSpriteRenderOptions( _sprite.entity.transform.rotation, _sprite.origin, _sprite.entity.transform.scale, _sprite.spriteEffects, layerDepth );
+			instance.spawn( _lastPosition, _sprite.Subtexture, fadeDuration, fadeDelay, initialColor, fadeToColor );
+			instance.setSpriteRenderOptions( _sprite.Entity.transform.rotation, _sprite.Origin, _sprite.Entity.transform.scale, _sprite.SpriteEffects, layerDepth );
 			_liveSpriteTrailInstances.Add( instance );
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			for( var i = 0; i < _liveSpriteTrailInstances.Count; i++ )
 				_liveSpriteTrailInstances[i].render( graphics, camera );

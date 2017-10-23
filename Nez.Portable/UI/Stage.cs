@@ -499,7 +499,7 @@ namespace Nez.UI
 		public float getWidth()
 		{
 			if( entity != null && !isFullScreen )
-				return entity.scene.sceneRenderTargetSize.X;
+				return entity.scene.SceneRenderTargetSize.X;
 			return Screen.width;
 		}
 
@@ -511,7 +511,7 @@ namespace Nez.UI
 		public float getHeight()
 		{
 			if( entity != null && !isFullScreen )
-				return entity.scene.sceneRenderTargetSize.Y;
+				return entity.scene.SceneRenderTargetSize.Y;
 			return Screen.height;
 		}
 

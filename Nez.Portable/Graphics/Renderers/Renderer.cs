@@ -113,20 +113,20 @@ namespace Nez
 		protected void renderAfterStateCheck( IRenderable renderable, Camera cam )
 		{
 			// check for Material changes
-			if( renderable.material != null && renderable.material != _currentMaterial )
+			if( renderable.Material != null && renderable.Material != _currentMaterial )
 			{
-				_currentMaterial = renderable.material;
+				_currentMaterial = renderable.Material;
 				if( _currentMaterial.effect != null )
 					_currentMaterial.onPreRender( cam );
 				flushBatch( cam );
 			}
-			else if( renderable.material == null && _currentMaterial != material )
+			else if( renderable.Material == null && _currentMaterial != material )
 			{
 				_currentMaterial = material;
 				flushBatch( cam );
 			}
 
-			renderable.render( Graphics.instance, cam );
+			renderable.Render( Graphics.instance, cam );
 		}
 
 
@@ -156,11 +156,11 @@ namespace Nez
 		protected virtual void debugRender( Scene scene, Camera cam )
 		{
 			Graphics.instance.batcher.end();
-			Graphics.instance.batcher.begin( Core.scene.camera.transformMatrix );
+			Graphics.instance.batcher.begin( Core.scene.Camera.transformMatrix );
 
-			for( var i = 0; i < scene.entities.count; i++ )
+			for( var i = 0; i < scene.Entities.count; i++ )
 			{
-				var entity = scene.entities[i];
+				var entity = scene.Entities[i];
 				if( entity.enabled )
 					entity.debugRender( Graphics.instance );
 			}

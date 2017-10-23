@@ -28,7 +28,7 @@ namespace Nez
 		/// <value>The absolute position.</value>
 		public Vector2 absolutePosition
 		{
-			get { return entity.transform.position + _localOffset; }
+			get { return Entity.transform.position + _localOffset; }
 		}
 
 		/// <summary>
@@ -39,8 +39,8 @@ namespace Nez
 		{
 			get
 			{
-				if( shouldColliderScaleAndRotateWithTransform && entity != null )
-					return entity.transform.rotation;
+				if( shouldColliderScaleAndRotateWithTransform && Entity != null )
+					return Entity.transform.rotation;
 				return 0;
 			}
 		}
@@ -141,22 +141,22 @@ namespace Nez
 
 		#region Component Lifecycle
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
 			if( _colliderRequiresAutoSizing )
 			{
 				// we only deal with boxes and circles here
 				Assert.isTrue( this is BoxCollider || this is CircleCollider, "Only box and circle colliders can be created automatically" );
 
-				var renderable = entity.getComponent<RenderableComponent>();
+				var renderable = Entity.getComponent<RenderableComponent>();
 				Debug.warnIf( renderable == null, "Collider has no shape and no RenderableComponent. Can't figure out how to size it." );
 				if( renderable != null )
 				{
-					var renderableBounds = renderable.bounds;
+					var renderableBounds = renderable.Bounds;
 
 					// we need the size * inverse scale here because when we autosize the Collider it needs to be without a scaled Renderable
-					var width = renderableBounds.width / entity.transform.scale.X;
-					var height = renderableBounds.height / entity.transform.scale.Y;
+					var width = renderableBounds.width / Entity.transform.scale.X;
+					var height = renderableBounds.height / Entity.transform.scale.Y;
 
 					// circle colliders need special care with the origin
 					if( this is CircleCollider )
@@ -165,7 +165,7 @@ namespace Nez
 						circleCollider.radius = Math.Max( width, height ) * 0.5f;
 
 						// fetch the Renderable's center, transfer it to local coordinates and use that as the localOffset of our collider
-						localOffset = renderableBounds.center - entity.transform.position;
+						localOffset = renderableBounds.Center - Entity.transform.position;
 					}
 					else
 					{
@@ -174,7 +174,7 @@ namespace Nez
 						boxCollider.height = height;
 
 						// fetch the Renderable's center, transfer it to local coordinates and use that as the localOffset of our collider
-						localOffset = renderableBounds.center - entity.transform.position;
+						localOffset = renderableBounds.Center - Entity.transform.position;
 					}
 				}
 			}
@@ -183,14 +183,14 @@ namespace Nez
 		}
 
 
-		public override void onRemovedFromEntity()
+		public override void OnRemovedFromEntity()
 		{
 			unregisterColliderWithPhysicsSystem();
 			_isParentEntityAddedToScene = false;
 		}
 
 
-		public override void onEntityTransformChanged( Transform.Component comp )
+		public override void OnEntityTransformChanged( Transform.Component comp )
 		{
 			// set the appropriate dirty flags
 			switch( comp )
@@ -211,13 +211,13 @@ namespace Nez
 		}
 
 
-		public override void onEnabled()
+		public override void OnEnabled()
 		{
 			registerColliderWithPhysicsSystem();
 		}
 
 
-		public override void onDisabled()
+		public override void OnDisabled()
 		{
 			unregisterColliderWithPhysicsSystem();
 		}
@@ -379,10 +379,10 @@ namespace Nez
 		#endregion
 
 
-		public override Component clone()
+		public override Component Clone()
 		{
 			var collider = MemberwiseClone() as Collider;
-			collider.entity = null;
+			collider.Entity = null;
 
 			if( shape != null )
 				collider.shape = shape.clone();

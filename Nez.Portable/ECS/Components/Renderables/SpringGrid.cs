@@ -99,13 +99,13 @@ namespace Nez
 		/// width of the grid
 		/// </summary>
 		/// <value>The width.</value>
-		public override float width { get { return _gridSize.Width; } }
+		public override float Width { get { return _gridSize.Width; } }
 
 		/// <summary>
 		/// height of the grid
 		/// </summary>
 		/// <value>The height.</value>
-		public override float height { get { return _gridSize.Height; } }
+		public override float Height { get { return _gridSize.Height; } }
 
 		/// <summary>
 		/// color of all major grid lines
@@ -219,7 +219,7 @@ namespace Nez
 		public void applyDirectedForce( Vector3 force, Vector3 position, float radius )
 		{
 			// translate position into our coordinate space
-			position -= new Vector3( entity.transform.position + localOffset, 0 );
+			position -= new Vector3( Entity.transform.position + localOffset, 0 );
 			foreach( var mass in _points )
 			{
 				if( Vector3.DistanceSquared( position, mass.position ) < radius * radius )
@@ -249,7 +249,7 @@ namespace Nez
 		public void applyImplosiveForce( float force, Vector3 position, float radius )
 		{
 			// translate position into our coordinate space
-			position -= new Vector3( entity.transform.position + localOffset, 0 );
+			position -= new Vector3( Entity.transform.position + localOffset, 0 );
 			foreach( var mass in _points )
 			{
 				var dist2 = Vector3.DistanceSquared( position, mass.position );
@@ -283,7 +283,7 @@ namespace Nez
 		public void applyExplosiveForce( float force, Vector3 position, float radius )
 		{
 			// translate position into our coordinate space
-			position -= new Vector3( entity.transform.position + localOffset, 0 );
+			position -= new Vector3( Entity.transform.position + localOffset, 0 );
 			foreach( var mass in _points )
 			{
 				var dist2 = Vector3.DistanceSquared( position, mass.position );
@@ -309,7 +309,7 @@ namespace Nez
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// TODO: make culling smarter and only render the lines that are actually on the screen rather than all or nothing
 			var width = _points.GetLength( 0 );
@@ -411,7 +411,7 @@ namespace Nez
 		{
 			var delta = end - start;
 			var angle = (float)Math.Atan2( delta.Y, delta.X );
-			batcher.draw( Graphics.instance.pixelTexture, start + entity.transform.position + localOffset, Graphics.instance.pixelTexture.sourceRect, color, angle, new Vector2( 0, 0.5f ), new Vector2( delta.Length(), thickness ), SpriteEffects.None, layerDepth );
+			batcher.draw( Graphics.instance.pixelTexture, start + Entity.transform.position + localOffset, Graphics.instance.pixelTexture.sourceRect, color, angle, new Vector2( 0, 0.5f ), new Vector2( delta.Length(), thickness ), SpriteEffects.None, layerDepth );
 		}
 
 	}

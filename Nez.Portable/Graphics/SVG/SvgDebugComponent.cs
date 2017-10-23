@@ -9,16 +9,16 @@ namespace Nez.Svg
 	/// </summary>
 	public class SvgDebugComponent : RenderableComponent
 	{
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			get
 			{
-				if( _areBoundsDirty )
+				if( areBoundsDirty )
 				{
-					_bounds.location = entity.transform.position;
-					_areBoundsDirty = false;
+					bounds.Location = Entity.transform.position;
+					areBoundsDirty = false;
 				}
-				return _bounds;
+				return bounds;
 			}
 		}
 
@@ -36,14 +36,14 @@ namespace Nez.Svg
 		{
 			svgDoc = SvgDocument.open( TitleContainer.OpenStream( "Content/" + pathToSvgFile ) );
 			_pathBuilder = pathBuilder;
-			_bounds = new RectangleF( 0, 0, svgDoc.width, svgDoc.height );
+			bounds = new RectangleF( 0, 0, svgDoc.width, svgDoc.height );
 
 			if( _pathBuilder == null )
 				_pathBuilder = new SvgReflectionPathBuilder();
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			// in some rare cases, there are SVG elements outside of a group so we'll render those cases first
 			renderRects( graphics.batcher, svgDoc.rectangles );
@@ -165,7 +165,7 @@ namespace Nez.Svg
 
 			foreach( var image in images )
 			{
-				var tex = image.getTexture( entity.scene.content );
+				var tex = image.getTexture( Entity.scene.ContentManager );
 				if( tex != null )
 				{
 					var rotation = image.rotationDegrees * Mathf.deg2Rad;
@@ -177,7 +177,7 @@ namespace Nez.Svg
 					{
 						var rect = image.rect;
 						var origin = new Vector2( 0.5f * rect.width, 0.5f * rect.height );
-						rect.location += origin;
+						rect.Location += origin;
 
 						batcher.draw( tex, rect, null, Color.White, rotation, origin, SpriteEffects.None, layerDepth );
 					}

@@ -10,9 +10,9 @@ namespace Nez
 	/// </summary>
 	public class UICanvas : RenderableComponent, IUpdatable
 	{
-		public override float width { get { return stage.getWidth(); } }
+		public override float Width { get { return stage.getWidth(); } }
 
-		public override float height { get { return stage.getHeight(); } }
+		public override float Height { get { return stage.getHeight(); } }
 
 		public Stage stage;
 
@@ -33,9 +33,9 @@ namespace Nez
 		}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			stage.entity = entity;
+			stage.entity = Entity;
 
 			foreach( var child in stage.getRoot().children )
 			{
@@ -45,7 +45,7 @@ namespace Nez
 		}
 
 
-		public override void onRemovedFromEntity()
+		public override void OnRemovedFromEntity()
 		{
 			stage.entity = null;
 			stage.dispose();
@@ -58,13 +58,13 @@ namespace Nez
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			stage.render( graphics, camera );
 		}
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			stage.getRoot().debugRender( graphics );
 		}

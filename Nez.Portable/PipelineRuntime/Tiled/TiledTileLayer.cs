@@ -61,24 +61,24 @@ namespace Nez.Tiled
 		public override void draw( Batcher batcher, Vector2 position, float layerDepth, RectangleF cameraClipBounds )
 		{
 			// offset it by the entity position since the tilemap will always expect positions in its own coordinate space
-			cameraClipBounds.location -= ( position + offset );
+			cameraClipBounds.Location -= ( position + offset );
 
 			int minX, minY, maxX, maxY;
 			if( tiledMap.requiresLargeTileCulling )
 			{
 				// we expand our cameraClipBounds by the excess tile width/height of the largest tiles to ensure we include tiles whose
 				// origin might be outside of the cameraClipBounds
-				minX = tiledMap.worldToTilePositionX( cameraClipBounds.left - ( tiledMap.largestTileWidth - tiledMap.tileWidth ) );
-				minY = tiledMap.worldToTilePositionY( cameraClipBounds.top - ( tiledMap.largestTileHeight - tiledMap.tileHeight ) );
-				maxX = tiledMap.worldToTilePositionX( cameraClipBounds.right + ( tiledMap.largestTileWidth - tiledMap.tileWidth ) );
-				maxY = tiledMap.worldToTilePositionY( cameraClipBounds.bottom + ( tiledMap.largestTileHeight - tiledMap.tileHeight ) );
+				minX = tiledMap.worldToTilePositionX( cameraClipBounds.Left - ( tiledMap.largestTileWidth - tiledMap.tileWidth ) );
+				minY = tiledMap.worldToTilePositionY( cameraClipBounds.Top - ( tiledMap.largestTileHeight - tiledMap.tileHeight ) );
+				maxX = tiledMap.worldToTilePositionX( cameraClipBounds.Right + ( tiledMap.largestTileWidth - tiledMap.tileWidth ) );
+				maxY = tiledMap.worldToTilePositionY( cameraClipBounds.Bottom + ( tiledMap.largestTileHeight - tiledMap.tileHeight ) );
 			}
 			else
 			{
-				minX = tiledMap.worldToTilePositionX( cameraClipBounds.left );
-				minY = tiledMap.worldToTilePositionY( cameraClipBounds.top );
-				maxX = tiledMap.worldToTilePositionX( cameraClipBounds.right );
-				maxY = tiledMap.worldToTilePositionY( cameraClipBounds.bottom );
+				minX = tiledMap.worldToTilePositionX( cameraClipBounds.Left );
+				minY = tiledMap.worldToTilePositionY( cameraClipBounds.Top );
+				maxX = tiledMap.worldToTilePositionX( cameraClipBounds.Right );
+				maxY = tiledMap.worldToTilePositionY( cameraClipBounds.Bottom );
 			}
 
 			// loop through and draw all the non-culled tiles
@@ -97,7 +97,7 @@ namespace Nez.Tiled
 					{
 						// TODO: this only checks left and bottom. we should check top and right as well to deal with rotated, odd-sized tiles
 						var tileworldpos = tiledMap.tileToWorldPosition( new Point( x, y ) );
-						if( tileworldpos.X + tileRegion.sourceRect.Width < cameraClipBounds.left || tileworldpos.Y - tileRegion.sourceRect.Height > cameraClipBounds.bottom )
+						if( tileworldpos.X + tileRegion.sourceRect.Width < cameraClipBounds.Left || tileworldpos.Y - tileRegion.sourceRect.Height > cameraClipBounds.Bottom )
 							continue;
 					}
 

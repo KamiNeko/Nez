@@ -167,7 +167,7 @@ namespace Nez.Verlet
 			var maxX = Math.Max( _particleOne.position.X, _particleTwo.position.X );
 			var minY = Math.Min( _particleOne.position.Y, _particleTwo.position.Y );
 			var maxY = Math.Max( _particleOne.position.Y, _particleTwo.position.Y );
-			_polygon.bounds = RectangleF.fromMinMax( minX, minY, maxX, maxY );
+			_polygon.bounds = RectangleF.FromMinMax( minX, minY, maxX, maxY );
 
 			Vector2 midPoint;
 			preparePolygonForCollisionChecks( out midPoint );

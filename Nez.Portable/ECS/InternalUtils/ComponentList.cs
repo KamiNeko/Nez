@@ -104,7 +104,7 @@ namespace Nez
 
 				// deal with renderLayer list if necessary
 				if( component is RenderableComponent )
-					_entity.scene.renderableComponents.remove( component as RenderableComponent );
+					_entity.scene.RenderableComponents.remove( component as RenderableComponent );
 
 				// deal with IUpdatable
 				if( component is IUpdatable )
@@ -113,7 +113,7 @@ namespace Nez
 				if( Core.entitySystemsEnabled )
 				{
 					_entity.componentBits.set( ComponentTypeManager.getIndexFor( component.GetType() ), false );
-					_entity.scene.entityProcessors.onComponentRemoved( _entity );
+					_entity.scene.EntityProcessors.onComponentRemoved( _entity );
 				}
 			}
 		}
@@ -125,7 +125,7 @@ namespace Nez
 			{
 				var component = _components.buffer[i];
 				if( component is RenderableComponent )
-					_entity.scene.renderableComponents.add( component as RenderableComponent );
+					_entity.scene.RenderableComponents.add( component as RenderableComponent );
 
 				if( component is IUpdatable )
 					_updatableComponents.add( component as IUpdatable );
@@ -133,7 +133,7 @@ namespace Nez
 				if( Core.entitySystemsEnabled )
 				{
 					_entity.componentBits.set( ComponentTypeManager.getIndexFor( component.GetType() ) );
-					_entity.scene.entityProcessors.onComponentAdded( _entity );
+					_entity.scene.EntityProcessors.onComponentAdded( _entity );
 				}
 			}
 		}
@@ -162,7 +162,7 @@ namespace Nez
 				{
 					var component = _componentsToAdd[i];
 					if( component is RenderableComponent )
-						_entity.scene.renderableComponents.add( component as RenderableComponent );
+						_entity.scene.RenderableComponents.add( component as RenderableComponent );
 
 					if( component is IUpdatable )
 						_updatableComponents.add( component as IUpdatable );
@@ -170,7 +170,7 @@ namespace Nez
 					if( Core.entitySystemsEnabled )
 					{
 						_entity.componentBits.set( ComponentTypeManager.getIndexFor( component.GetType() ) );
-						_entity.scene.entityProcessors.onComponentAdded( _entity );
+						_entity.scene.EntityProcessors.onComponentAdded( _entity );
 					}
 
 					_components.add( component );
@@ -185,11 +185,11 @@ namespace Nez
 				for( var i = 0; i < _tempBufferList.Count; i++ )
 				{
 					var component = _tempBufferList[i];
-					component.onAddedToEntity();
+					component.OnAddedToEntity();
 
 					// component.enabled checks both the Entity and the Component
-					if( component.enabled )
-						component.onEnabled();
+					if( component.Enabled )
+						component.OnEnabled();
 				}
 
 				_tempBufferList.Clear();
@@ -207,7 +207,7 @@ namespace Nez
 		{
 			// deal with renderLayer list if necessary
 			if( component is RenderableComponent )
-				_entity.scene.renderableComponents.remove( component as RenderableComponent );
+				_entity.scene.RenderableComponents.remove( component as RenderableComponent );
 
 			// deal with IUpdatable
 			if( component is IUpdatable )
@@ -216,11 +216,11 @@ namespace Nez
 			if( Core.entitySystemsEnabled )
 			{
 				_entity.componentBits.set( ComponentTypeManager.getIndexFor( component.GetType() ), false );
-				_entity.scene.entityProcessors.onComponentRemoved( _entity );
+				_entity.scene.EntityProcessors.onComponentRemoved( _entity );
 			}
 
-			component.onRemovedFromEntity();
-			component.entity = null;
+			component.OnRemovedFromEntity();
+			component.Entity = null;
 		}
 
 
@@ -302,7 +302,7 @@ namespace Nez
 			updateLists();
 			for( var i = 0; i < _updatableComponents.length; i++ )
 			{
-				if( _updatableComponents.buffer[i].enabled )
+				if( _updatableComponents.buffer[i].Enabled )
 					_updatableComponents.buffer[i].update();
 			}
 		}
@@ -313,14 +313,14 @@ namespace Nez
 		{
 			for( var i = 0; i < _components.length; i++ )
 			{
-				if( _components.buffer[i].enabled )
-					_components.buffer[i].onEntityTransformChanged( comp );
+				if( _components.buffer[i].Enabled )
+					_components.buffer[i].OnEntityTransformChanged( comp );
 			}
 
 			for( var i = 0; i < _componentsToAdd.Count; i++ )
 			{
-				if( _componentsToAdd[i].enabled )
-					_componentsToAdd[i].onEntityTransformChanged( comp );
+				if( _componentsToAdd[i].Enabled )
+					_componentsToAdd[i].OnEntityTransformChanged( comp );
 			}
 		}
 
@@ -328,14 +328,14 @@ namespace Nez
 		internal void onEntityEnabled()
 		{
 			for( var i = 0; i < _components.length; i++ )
-				_components.buffer[i].onEnabled();
+				_components.buffer[i].OnEnabled();
 		}
 
 
 		internal void onEntityDisabled()
 		{
 			for( var i = 0; i < _components.length; i++ )
-				_components.buffer[i].onDisabled();
+				_components.buffer[i].OnDisabled();
 		}
 
 
@@ -343,8 +343,8 @@ namespace Nez
 		{
 			for( var i = 0; i < _components.length; i++ )
 			{
-				if( _components.buffer[i].enabled )
-					_components.buffer[i].debugRender( graphics );
+				if( _components.buffer[i].Enabled )
+					_components.buffer[i].DebugRender( graphics );
 			}
 		}
 

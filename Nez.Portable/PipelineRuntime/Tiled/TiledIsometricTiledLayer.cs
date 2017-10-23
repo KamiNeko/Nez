@@ -62,13 +62,13 @@ namespace Nez.Tiled
 			position += offset;
 
 			// offset it by the entity position since the tilemap will always expect positions in its own coordinate space
-			cameraClipBounds.location -= position;
+			cameraClipBounds.Location -= position;
 			if( tiledMap.requiresLargeTileCulling )
 			{
 				// we expand our cameraClipBounds by the excess tile width/height of the largest tiles to ensure we include tiles whose
 				// origin might be outside of the cameraClipBounds
-				cameraClipBounds.location -= new Vector2( tiledMap.largestTileWidth, tiledMap.largestTileHeight - tiledMap.tileHeight );
-				cameraClipBounds.size += new Vector2( tiledMap.largestTileWidth, tiledMap.largestTileHeight - tiledMap.tileHeight );
+				cameraClipBounds.Location -= new Vector2( tiledMap.largestTileWidth, tiledMap.largestTileHeight - tiledMap.tileHeight );
+				cameraClipBounds.Size += new Vector2( tiledMap.largestTileWidth, tiledMap.largestTileHeight - tiledMap.tileHeight );
 			}
 
 			Point min, max;
@@ -85,7 +85,7 @@ namespace Nez.Tiled
 						continue;
 
 					var tileworldpos = tiledMap.isometricTileToWorldPosition( x, y );
-					if( tileworldpos.X < cameraClipBounds.left || tileworldpos.Y < cameraClipBounds.top || tileworldpos.X > cameraClipBounds.right || tileworldpos.Y > cameraClipBounds.bottom )
+					if( tileworldpos.X < cameraClipBounds.Left || tileworldpos.Y < cameraClipBounds.Top || tileworldpos.X > cameraClipBounds.Right || tileworldpos.Y > cameraClipBounds.Bottom )
 						continue;
 
 					var tileRegion = tile.textureRegion;
@@ -94,7 +94,7 @@ namespace Nez.Tiled
 					if( tiledMap.requiresLargeTileCulling )
 					{
 						// TODO: this only checks left and bottom. we should check top and right as well to deal with rotated, odd-sized tiles
-						if( tileworldpos.X + tileRegion.sourceRect.Width < cameraClipBounds.left || tileworldpos.Y - tileRegion.sourceRect.Height > cameraClipBounds.bottom )
+						if( tileworldpos.X + tileRegion.sourceRect.Width < cameraClipBounds.Left || tileworldpos.Y - tileRegion.sourceRect.Height > cameraClipBounds.Bottom )
 							continue;
 					}
 

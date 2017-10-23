@@ -10,17 +10,17 @@ namespace Nez.Shadows
 	/// </summary>
 	public class PolySpotLight : PolyLight
 	{
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			get
 			{
-				if( _areBoundsDirty )
+				if( areBoundsDirty )
 				{
-					_bounds = RectangleF.rectEncompassingPoints( _polygon.points );
-					_bounds.location += entity.transform.position;
-					_areBoundsDirty = false;
+					bounds = RectangleF.RectEncompassingPoints( _polygon.points );
+					bounds.Location += Entity.transform.position;
+					areBoundsDirty = false;
 				}
-				return _bounds;
+				return bounds;
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace Nez.Shadows
 		void recalculatePolyPoints()
 		{
 			// no need to recaluc if we dont have an Entity to work with
-			if( entity == null )
+			if( Entity == null )
 				return;
 
 			// we only need a small number of verts for the spot polygon. We base how many off of the spot angle. Because we are approximating
@@ -98,34 +98,34 @@ namespace Nez.Shadows
 
 			// rotate our verts based on the Entity.rotation and offset half of the spot angle so that the center of the spot points in
 			// the direction of rotation
-			Polygon.rotatePolygonVerts( entity.rotation - _spotAngle * 0.5f * Mathf.deg2Rad, _polygon._originalPoints, _polygon.points );
+			Polygon.rotatePolygonVerts( Entity.rotation - _spotAngle * 0.5f * Mathf.deg2Rad, _polygon._originalPoints, _polygon.points );
 		}
 
 
 		#region Component overrides
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			base.onAddedToEntity();
+			base.OnAddedToEntity();
 			recalculatePolyPoints();
 		}
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
-			base.debugRender( graphics );
+			base.DebugRender( graphics );
 			graphics.batcher.drawPolygon( _polygon.position, _polygon.points, Debug.Colors.colliderEdge, true, Debug.Size.lineSizeMultiplier );
 		}
 
 
-		public override void onEntityTransformChanged( Transform.Component comp )
+		public override void OnEntityTransformChanged( Transform.Component comp )
 		{
-			base.onEntityTransformChanged( comp );
+			base.OnEntityTransformChanged( comp );
 
 			if( comp == Transform.Component.Rotation )
 			{
 				// when rotation changes we need to update our verts to account for the new rotation
-				Polygon.rotatePolygonVerts( entity.rotation - _spotAngle * 0.5f * Mathf.deg2Rad, _polygon._originalPoints, _polygon.points );
+				Polygon.rotatePolygonVerts( Entity.rotation - _spotAngle * 0.5f * Mathf.deg2Rad, _polygon._originalPoints, _polygon.points );
 			}
 		}
 
@@ -138,9 +138,9 @@ namespace Nez.Shadows
 		{
 			CollisionResult result;
 			var totalCollisions = 0;
-			_polygon.position = entity.transform.position + _localOffset;
+			_polygon.position = Entity.transform.position + localOffset;
 
-			var neighbors = Physics.boxcastBroadphase( bounds, collidesWithLayers );
+			var neighbors = Physics.boxcastBroadphase( Bounds, collidesWithLayers );
 			foreach( var neighbor in neighbors )
 			{
 				// skip triggers

@@ -262,27 +262,27 @@ namespace Nez.PhysicsShapes
 				Matrix2D tempMat;
 				var combinedMatrix = Matrix2D.createTranslation( -_polygonCenter );
 
-				if( collider.entity.transform.scale != Vector2.One )
+				if( collider.Entity.transform.scale != Vector2.One )
 				{
-					Matrix2D.createScale( collider.entity.transform.scale.X, collider.entity.transform.scale.Y, out tempMat );
+					Matrix2D.createScale( collider.Entity.transform.scale.X, collider.Entity.transform.scale.Y, out tempMat );
 					Matrix2D.multiply( ref combinedMatrix, ref tempMat, out combinedMatrix );
 
 					hasUnitScale = false;
 					// scale our offset and set it as center. If we have rotation also it will be reset below
-					var scaledOffset = collider.localOffset * collider.entity.transform.scale;
+					var scaledOffset = collider.localOffset * collider.Entity.transform.scale;
 					center = scaledOffset;
 				}
 
-				if( collider.entity.transform.rotation != 0 )
+				if( collider.Entity.transform.rotation != 0 )
 				{
-					Matrix2D.createRotation( collider.entity.transform.rotation, out tempMat );
+					Matrix2D.createRotation( collider.Entity.transform.rotation, out tempMat );
 					Matrix2D.multiply( ref combinedMatrix, ref tempMat, out combinedMatrix );
 
 					// to deal with rotation with an offset origin we just move our center in a circle around 0,0 with our offset making the 0 angle
 					// we have to deal with scale here as well so we scale our offset to get the proper length first.
 					var offsetAngle = Mathf.atan2( collider.localOffset.Y, collider.localOffset.X ) * Mathf.rad2Deg;
-					var offsetLength = hasUnitScale ? collider._localOffsetLength : ( collider.localOffset * collider.entity.transform.scale ).Length();
-					center = Mathf.pointOnCircle( Vector2.Zero, offsetLength, collider.entity.transform.rotationDegrees + offsetAngle );
+					var offsetLength = hasUnitScale ? collider._localOffsetLength : ( collider.localOffset * collider.Entity.transform.scale ).Length();
+					center = Mathf.pointOnCircle( Vector2.Zero, offsetLength, collider.Entity.transform.rotationDegrees + offsetAngle );
 				}
 
 				Matrix2D.createTranslation( ref _polygonCenter, out tempMat ); // translate back center
@@ -291,16 +291,16 @@ namespace Nez.PhysicsShapes
 				// finaly transform our original points
 				Vector2Ext.transform( _originalPoints, ref combinedMatrix, points );
 
-				isUnrotated = collider.entity.transform.rotation == 0;
+				isUnrotated = collider.Entity.transform.rotation == 0;
 
 				// we only need to rebuild our edge normals if we rotated
 				if( collider._isRotationDirty )
 					_areEdgeNormalsDirty = true;
 			}
 
-			position = collider.entity.transform.position + center;
-			bounds = RectangleF.rectEncompassingPoints( points );
-			bounds.location += position;
+			position = collider.Entity.transform.position + center;
+			bounds = RectangleF.RectEncompassingPoints( points );
+			bounds.Location += position;
 		}
 
 

@@ -16,17 +16,17 @@ namespace Nez.Shadows
 		/// </summary>
 		public int collidesWithLayers = Physics.allLayers;
 
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			get
 			{
-				if( _areBoundsDirty )
+				if( areBoundsDirty )
 				{
-					_bounds.calculateBounds( entity.transform.position, _localOffset, new Vector2( _radius, _radius ), Vector2.One, 0, _radius * 2f, _radius * 2f );
-					_areBoundsDirty = false;
+					bounds.CalculateBounds( Entity.transform.position, localOffset, new Vector2( _radius, _radius ), Vector2.One, 0, _radius * 2f, _radius * 2f );
+					areBoundsDirty = false;
 				}
 
-				return _bounds;
+				return bounds;
 			}
 		}
 
@@ -67,7 +67,7 @@ namespace Nez.Shadows
 		{
 			this.radius = radius;
 			this.power = power;
-			this.color = color;
+			this.Color = color;
 			computeTriangleIndices();
 		}
 
@@ -79,7 +79,7 @@ namespace Nez.Shadows
 			if( radius != _radius )
 			{
 				_radius = radius;
-				_areBoundsDirty = true;
+				areBoundsDirty = true;
 
 				if( _lightEffect != null )
 					_lightEffect.Parameters["lightRadius"].SetValue( radius );
@@ -104,7 +104,7 @@ namespace Nez.Shadows
 		/// <returns>The overlapped components.</returns>
 		protected virtual int getOverlappedColliders()
 		{
-			return Physics.overlapCircleAll( entity.position + _localOffset, _radius, _colliderCache, collidesWithLayers );
+			return Physics.overlapCircleAll( Entity.position + localOffset, _radius, _colliderCache, collidesWithLayers );
 		}
 
 
@@ -120,22 +120,22 @@ namespace Nez.Shadows
 
 		#region Component and RenderableComponent
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			_lightEffect = entity.scene.content.loadEffect<Effect>( "polygonLight", EffectResource.polygonLightBytes );
+			_lightEffect = Entity.scene.ContentManager.loadEffect<Effect>( "polygonLight", EffectResource.polygonLightBytes );
 			_lightEffect.Parameters["lightRadius"].SetValue( radius );
 			_visibility = new VisibilityComputer();
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
-			if( power > 0 && isVisibleFromCamera( camera ) )
+			if( power > 0 && IsVisibleFromCamera( camera ) )
 			{
 				var totalOverlaps = getOverlappedColliders();
 
 				// compute the visibility mesh
-				_visibility.begin( entity.transform.position + _localOffset, _radius );
+				_visibility.begin( Entity.transform.position + localOffset, _radius );
 				loadVisibilityBoundaries();
 				for( var i = 0; i < totalOverlaps; i++ )
 				{
@@ -163,9 +163,9 @@ namespace Nez.Shadows
 				//Core.graphicsDevice.RasterizerState = rasterizerState;
 
 				// Apply the effect
-				_lightEffect.Parameters["viewProjectionMatrix"].SetValue( entity.scene.camera.viewProjectionMatrix );
-				_lightEffect.Parameters["lightSource"].SetValue( entity.transform.position );
-				_lightEffect.Parameters["lightColor"].SetValue( color.ToVector3() * power );
+				_lightEffect.Parameters["viewProjectionMatrix"].SetValue( Entity.scene.Camera.viewProjectionMatrix );
+				_lightEffect.Parameters["lightSource"].SetValue( Entity.transform.position );
+				_lightEffect.Parameters["lightColor"].SetValue( Color.ToVector3() * power );
 				_lightEffect.Techniques[0].Passes[0].Apply();
 
 				Core.graphicsDevice.DrawUserIndexedPrimitives( PrimitiveType.TriangleList, _vertices.buffer, 0, _vertices.length, _indices.buffer, 0, primitiveCount );
@@ -173,11 +173,11 @@ namespace Nez.Shadows
 		}
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			// draw a square for our pivot/origin and draw our bounds
-			graphics.batcher.drawPixel( entity.transform.position + _localOffset, Debug.Colors.renderableCenter, 4 );
-			graphics.batcher.drawHollowRect( bounds, Debug.Colors.renderableBounds );
+			graphics.batcher.drawPixel( Entity.transform.position + localOffset, Debug.Colors.renderableCenter, 4 );
+			graphics.batcher.drawHollowRect( Bounds, Debug.Colors.renderableBounds );
 		}
 
 		#endregion
@@ -218,7 +218,7 @@ namespace Nez.Shadows
 			_vertices.reset();
 
 			// add a vertex for the center of the mesh
-			addVert( entity.transform.position );
+			addVert( Entity.transform.position );
 
 			// add all the other encounter points as vertices storing their world position as UV coordinates
 			for( var i = 0; i < encounters.Count; i++ )

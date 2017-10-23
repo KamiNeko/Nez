@@ -85,7 +85,7 @@ namespace Nez.PhysicsShapes
 		{
 			result = new CollisionResult();
 
-			var closestPointOnBounds = box.bounds.getClosestPointOnRectangleBorderToPoint( circle.position, out result.normal );
+			var closestPointOnBounds = box.bounds.GetClosestPointOnRectangleBorderToPoint( circle.position, out result.normal );
 
 			// deal with circles whos center is in the box first since its cheaper to see if we are contained
 			if( box.containsPoint( circle.position ) )

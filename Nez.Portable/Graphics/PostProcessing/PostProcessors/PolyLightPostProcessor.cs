@@ -76,7 +76,7 @@ namespace Nez
 		/// </summary>
 		void updateBlurEffectDeltas()
 		{
-			var sceneRenderTargetSize = scene.sceneRenderTargetSize;
+			var sceneRenderTargetSize = scene.SceneRenderTargetSize;
 			_blurEffect.horizontalBlurDelta = 1f / ( sceneRenderTargetSize.X * _blurRenderTargetScale );
 			_blurEffect.verticalBlurDelta = 1f / ( sceneRenderTargetSize.Y * _blurRenderTargetScale );
 		}
@@ -102,8 +102,8 @@ namespace Nez
 
 				if( _blurEnabled && _blurEffect == null && scene != null )
 				{
-					_blurEffect = scene.content.loadNezEffect<GaussianBlurEffect>();
-					if( scene.sceneRenderTarget != null )
+					_blurEffect = scene.ContentManager.loadNezEffect<GaussianBlurEffect>();
+					if( scene.SceneRenderTarget != null )
 						updateBlurEffectDeltas();
 				}
 			}
@@ -117,7 +117,7 @@ namespace Nez
 			if( _blurRenderTargetScale != blurRenderTargetScale )
 			{
 				_blurRenderTargetScale = blurRenderTargetScale;
-				if( _blurEffect != null && scene.sceneRenderTarget != null )
+				if( _blurEffect != null && scene.SceneRenderTarget != null )
 					updateBlurEffectDeltas();
 			}
 
@@ -138,12 +138,12 @@ namespace Nez
 
 		public override void onAddedToScene()
 		{
-			effect = scene.content.loadEffect<Effect>( "spriteLightMultiply", EffectResource.spriteLightMultiplyBytes );
+			effect = scene.ContentManager.loadEffect<Effect>( "spriteLightMultiply", EffectResource.spriteLightMultiplyBytes );
 			effect.Parameters["_lightTexture"].SetValue( _lightsRenderTexture );
 			effect.Parameters["_multiplicativeFactor"].SetValue( _multiplicativeFactor );
 
 			if( _blurEnabled )
-				_blurEffect = scene.content.loadNezEffect<GaussianBlurEffect>();
+				_blurEffect = scene.ContentManager.loadNezEffect<GaussianBlurEffect>();
 		}
 
 
@@ -153,7 +153,7 @@ namespace Nez
 			{
 				// aquire a temporary rendertarget for the processing. It can be scaled via renderTargetScale in order to minimize fillrate costs. Reducing
 				// the resolution in this way doesn't hurt quality, because we are going to be blurring the images in any case.
-				var sceneRenderTargetSize = scene.sceneRenderTargetSize;
+				var sceneRenderTargetSize = scene.SceneRenderTargetSize;
 				var tempRenderTarget = RenderTarget.getTemporary( (int)( sceneRenderTargetSize.X * _blurRenderTargetScale ), (int)( sceneRenderTargetSize.Y * _blurRenderTargetScale ), DepthFormat.None );
 
 

@@ -11,56 +11,56 @@ namespace Nez
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static T addComponent<T>( this Component self, T component ) where T : Component
 		{
-			return self.entity.addComponent( component );
+			return self.Entity.addComponent( component );
 		}
 
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static T addComponent<T>( this Component self ) where T : Component, new()
 		{
-			return self.entity.addComponent<T>();
+			return self.Entity.addComponent<T>();
 		}
 
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static T getComponent<T>( this Component self ) where T : Component
 		{
-			return self.entity.getComponent<T>();
+			return self.Entity.getComponent<T>();
 		}
 
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static void getComponents<T>( this Component self, List<T> componentList ) where T : class
 		{
-			self.entity.getComponents<T>( componentList );
+			self.Entity.getComponents<T>( componentList );
 		}
 
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static List<T> getComponents<T>( this Component self ) where T : Component
 		{
-			return self.entity.getComponents<T>();
+			return self.Entity.getComponents<T>();
 		}
 
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static bool removeComponent<T>( this Component self ) where T : Component
 		{
-			return self.entity.removeComponent<T>();
+			return self.Entity.removeComponent<T>();
 		}
 
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static void removeComponent( this Component self, Component component )
 		{
-			self.entity.removeComponent( component );
+			self.Entity.removeComponent( component );
 		}
 
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static void removeComponent( this Component self )
 		{
-			self.entity.removeComponent( self );
+			self.Entity.removeComponent( self );
 		}
 
 		#endregion

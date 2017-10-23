@@ -14,7 +14,7 @@ namespace Nez
 		/// Any other odd sizes should override this appropriately.
 		/// </summary>
 		/// <value>The bounds.</value>
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			get
 			{
@@ -33,11 +33,11 @@ namespace Nez
 		/// <value>The position.</value>
 		public Vector3 position
 		{
-			get { return new Vector3( transform.position, _positionZ ); }
+			get { return new Vector3( Transform.position, _positionZ ); }
 			set
 			{
 				_positionZ = value.Z;
-				transform.setPosition( value.X, value.Y );
+				Transform.setPosition( value.X, value.Y );
 			}
 		}
 
@@ -52,12 +52,12 @@ namespace Nez
 		/// <value>The rotation.</value>
 		public Vector3 rotation
 		{
-			get { return new Vector3( _rotationXY, transform.rotation ); }
+			get { return new Vector3( _rotationXY, Transform.rotation ); }
 			set
 			{
 				_rotationXY.X = value.X;
 				_rotationXY.Y = value.Y;
-				transform.setRotation( value.Z );
+				Transform.setRotation( value.Z );
 			}
 		}
 
@@ -67,7 +67,7 @@ namespace Nez
 		/// <value>The rotation degrees.</value>
 		public Vector3 rotationDegrees
 		{
-			get { return new Vector3( _rotationXY, transform.rotation ) * Mathf.rad2Deg; }
+			get { return new Vector3( _rotationXY, Transform.rotation ) * Mathf.rad2Deg; }
 			set { rotation = value *= Mathf.deg2Rad; }
 		}
 

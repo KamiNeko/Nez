@@ -41,21 +41,21 @@ namespace Nez.PhysicsShapes
 			if( collider.shouldColliderScaleAndRotateWithTransform )
 			{
 				// we only scale lineraly being a circle so we'll use the max value
-				var scale = collider.entity.transform.scale;
+				var scale = collider.Entity.transform.scale;
 				var hasUnitScale = scale.X == 1 && scale.Y == 1;
 				var maxScale = Math.Max( scale.X, scale.Y );
 				radius = _originalRadius * maxScale;
 
-				if( collider.entity.transform.rotation != 0 )
+				if( collider.Entity.transform.rotation != 0 )
 				{
 					// to deal with rotation with an offset origin we just move our center in a circle around 0,0 with our offset making the 0 angle
 					var offsetAngle = Mathf.atan2( collider.localOffset.Y, collider.localOffset.X ) * Mathf.rad2Deg;
-					var offsetLength = hasUnitScale ? collider._localOffsetLength : ( collider.localOffset * collider.entity.transform.scale ).Length();
-					center = Mathf.pointOnCircle( Vector2.Zero, offsetLength, collider.entity.transform.rotationDegrees + offsetAngle );
+					var offsetLength = hasUnitScale ? collider._localOffsetLength : ( collider.localOffset * collider.Entity.transform.scale ).Length();
+					center = Mathf.pointOnCircle( Vector2.Zero, offsetLength, collider.Entity.transform.rotationDegrees + offsetAngle );
 				}
 			}
 
-			position = collider.entity.transform.position + center;
+			position = collider.Entity.transform.position + center;
 			bounds = new RectangleF( position.X - radius, position.Y - radius, radius * 2f, radius * 2f );
 		}
 

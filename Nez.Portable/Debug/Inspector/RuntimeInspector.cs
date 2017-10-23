@@ -88,7 +88,7 @@ namespace Nez
 			// manually start a fresh batch and call the UICanvas Component lifecycle methods since it isnt attached to the Scene
 			Graphics.instance.batcher.begin();
 			( ui as IUpdatable ).update();
-			ui.render( Graphics.instance, _camera );
+			ui.Render( Graphics.instance, _camera );
 			Graphics.instance.batcher.end();
 		}
 
@@ -138,7 +138,7 @@ namespace Nez
 
 			// since we arent using this as a Component on an Entity we'll fake it here
 			ui = new UICanvas();
-			ui.onAddedToEntity();
+			ui.OnAddedToEntity();
 			ui.stage.isFullScreen = true;
 
 			_table = new Table();

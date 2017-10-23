@@ -10,20 +10,20 @@ namespace Nez
 	/// </summary>
 	public class PrototypeSprite : Sprite
 	{
-		public override float width { get { return _width; } }
-		public override float height { get { return _height; } }
+		public override float Width { get { return _width; } }
+		public override float Height { get { return _height; } }
 
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			get
 			{
-				if( _areBoundsDirty )
+				if( areBoundsDirty )
 				{
-					_bounds.calculateBounds( entity.transform.position, _localOffset, _origin, entity.transform.scale, entity.transform.rotation, _width, _height );
-					_areBoundsDirty = false;
+					bounds.CalculateBounds( Entity.transform.position, localOffset, origin, Entity.transform.scale, Entity.transform.rotation, _width, _height );
+					areBoundsDirty = false;
 				}
 
-				return _bounds;
+				return bounds;
 			}
 		}
 
@@ -41,7 +41,7 @@ namespace Nez
 		{
 			_width = width;
 			_height = height;
-			originNormalized = new Vector2( 0.5f, 0.5f );
+			OriginNormalized = new Vector2( 0.5f, 0.5f );
 		}
 
 
@@ -87,12 +87,12 @@ namespace Nez
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
-			var pos = ( entity.transform.position - ( origin * entity.transform.localScale ) + localOffset );
-			var size = new Point( (int)( _width * entity.transform.localScale.X ), (int)( _height * entity.transform.localScale.Y ) );
+			var pos = ( Entity.transform.position - ( Origin * Entity.transform.localScale ) + localOffset );
+			var size = new Point( (int)( _width * Entity.transform.localScale.X ), (int)( _height * Entity.transform.localScale.Y ) );
 			var destRect = new Rectangle( (int)pos.X, (int)pos.Y, size.X, size.Y );
-			graphics.batcher.draw( subtexture, destRect, subtexture.sourceRect, color, entity.transform.rotation, SpriteEffects.None, layerDepth, _skewTopX, _skewBottomX, _skewLeftY, _skewRightY );
+			graphics.batcher.draw( Subtexture, destRect, Subtexture.sourceRect, Color, Entity.transform.rotation, SpriteEffects.None, layerDepth, _skewTopX, _skewBottomX, _skewLeftY, _skewRightY );
 		}
 
 	}

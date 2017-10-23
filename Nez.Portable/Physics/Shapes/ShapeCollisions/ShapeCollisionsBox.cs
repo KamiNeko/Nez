@@ -40,10 +40,10 @@ namespace Nez.PhysicsShapes
 
 			// first we check for an overlap. if we have an overlap we dont do the sweep test
 			var minkowskiDiff = minkowskiDifference( first, second );
-			if( minkowskiDiff.contains( 0f, 0f ) )
+			if( minkowskiDiff.Contains( 0f, 0f ) )
 			{
 				// calculate the MTV. if it is zero then we can just call this a non-collision
-				var mtv = minkowskiDiff.getClosestPointOnBoundsToOrigin();
+				var mtv = minkowskiDiff.GetClosestPointOnBoundsToOrigin();
 				if( mtv == Vector2.Zero )
 					return false;
 						
@@ -59,13 +59,13 @@ namespace Nez.PhysicsShapes
 				// ray-cast the movement vector against the Minkowski AABB
 				var ray = new Ray2D( Vector2.Zero, -movement );
 				float fraction;
-				if( minkowskiDiff.rayIntersects( ref ray, out fraction ) && fraction <= 1.0f )
+				if( minkowskiDiff.RayIntersects( ref ray, out fraction ) && fraction <= 1.0f )
 				{
 					hit.fraction = fraction;
 					hit.distance = movement.Length() * fraction;
 					hit.normal = -movement;
 					hit.normal.Normalize();
-					hit.centroid = first.bounds.center + movement * fraction;
+					hit.centroid = first.bounds.Center + movement * fraction;
 
 					return true;
 				}
@@ -80,10 +80,10 @@ namespace Nez.PhysicsShapes
 			result = new CollisionResult();
 
 			var minkowskiDiff = minkowskiDifference( first, second );
-			if( minkowskiDiff.contains( 0f, 0f ) )
+			if( minkowskiDiff.Contains( 0f, 0f ) )
 			{
 				// calculate the MTV. if it is zero then we can just call this a non-collision
-				result.minimumTranslationVector = minkowskiDiff.getClosestPointOnBoundsToOrigin();
+				result.minimumTranslationVector = minkowskiDiff.GetClosestPointOnBoundsToOrigin();
 
 				if( result.minimumTranslationVector == Vector2.Zero )
 					return false;
@@ -103,9 +103,9 @@ namespace Nez.PhysicsShapes
 		{
 			// we need the top-left of our first box but it must include our motion. Collider only modifies position with the motion so we
 			// need to figure out what the motion was using just the position.
-			var positionOffset = first.position - ( first.bounds.location + first.bounds.size / 2f );
-			var topLeft = first.bounds.location + positionOffset - second.bounds.max;
-			var fullSize = first.bounds.size + second.bounds.size;
+			var positionOffset = first.position - ( first.bounds.Location + first.bounds.Size / 2f );
+			var topLeft = first.bounds.Location + positionOffset - second.bounds.Max;
+			var fullSize = first.bounds.Size + second.bounds.Size;
 
 			return new RectangleF( topLeft.X, topLeft.Y, fullSize.X, fullSize.Y );
 		}

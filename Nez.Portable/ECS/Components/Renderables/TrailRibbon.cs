@@ -12,10 +12,10 @@ namespace Nez
 	/// </summary>
 	public class TrailRibbon : RenderableComponent, IUpdatable
 	{
-		public override RectangleF bounds
+		public override RectangleF Bounds
 		{
 			// we calculate bounds in update so no need to mess with anything here
-			get { return _bounds; }
+			get { return bounds; }
 		}
 
 		/// <summary>
@@ -61,14 +61,14 @@ namespace Nez
 			_vertices = new VertexPositionColor[_ribbonLength * 2 + 3];
 
 			// head of ribbon
-			_vertices[0].Position = new Vector3( entity.transform.position, 0f ) + radiusVec;
+			_vertices[0].Position = new Vector3( Entity.transform.position, 0f ) + radiusVec;
 			_vertices[0].Color = Color.Red;
-			_vertices[1].Position = new Vector3( entity.transform.position, 0f ) + radiusVec;
+			_vertices[1].Position = new Vector3( Entity.transform.position, 0f ) + radiusVec;
 			_vertices[1].Color = Color.Yellow;
-			_vertices[2].Position = new Vector3( entity.transform.position, 0f ) + radiusVec;
+			_vertices[2].Position = new Vector3( Entity.transform.position, 0f ) + radiusVec;
 			_vertices[2].Color = Color.Green;
 
-			var pos = entity.transform.position;
+			var pos = Entity.transform.position;
 			for( var i = 0; i < _ribbonLength; i++ )
 			{
 				var distanceRatio = 1 - ( 1 / (float)_ribbonLength * ( i + 1 ) );
@@ -89,7 +89,7 @@ namespace Nez
 			if( !_areVertsDirty )
 				return;
 			
-			var center = new Vector3( entity.transform.position, 0f );
+			var center = new Vector3( Entity.transform.position, 0f );
 			var radVec = new Vector3( 0, -ribbonRadius, 0 );
 			
 			// starting triangle, the head
@@ -128,10 +128,10 @@ namespace Nez
 				segCount++;
 			}
 
-			_bounds.x = minX;
-			_bounds.y = minY;
-			_bounds.width = maxX - minX;
-			_bounds.height = maxY - minY;
+			bounds.x = minX;
+			bounds.y = minY;
+			bounds.width = maxX - minX;
+			bounds.height = maxY - minY;
 
 			_areVertsDirty = false;
 		}
@@ -139,28 +139,28 @@ namespace Nez
 
 		#region Component/RenderableComponent/IUpdatable
 
-		public override void onEnabled()
+		public override void OnEnabled()
 		{
-			base.onEnabled();
+			base.OnEnabled();
 
 			_segments.Clear();
 			initializeVertices();
 		}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
 			initializeVertices();
 
-			_basicEffect = entity.scene.content.loadMonoGameEffect<BasicEffect>();
+			_basicEffect = Entity.scene.ContentManager.loadMonoGameEffect<BasicEffect>();
 			_basicEffect.World = Matrix.Identity;
 			_basicEffect.VertexColorEnabled = true;
 		}
 
 
-		public override void onRemovedFromEntity()
+		public override void OnRemovedFromEntity()
 		{
-			entity.scene.content.unloadEffect( _basicEffect );
+			Entity.scene.ContentManager.unloadEffect( _basicEffect );
 			_basicEffect = null;
 		}
 
@@ -170,12 +170,12 @@ namespace Nez
 			// remove last node and put it at the front with new settings
 			var seg = _segments.Last.Value;
 			_segments.RemoveLast();
-			var velocity = entity.transform.position - _segments.First.Value.position;
+			var velocity = Entity.transform.position - _segments.First.Value.position;
 
 			// if the distance between the last segment and the current position is too tiny then just copy over the current head value
 			if( velocity.LengthSquared() > float.Epsilon * float.Epsilon )
 			{
-				seg.position = entity.transform.position;
+				seg.position = Entity.transform.position;
 				seg.radius = ribbonRadius;
 				seg.radiusDirection = new Vector2( -velocity.Y, velocity.X );
 				seg.radiusDirection.Normalize();
@@ -192,14 +192,14 @@ namespace Nez
 		}
 
 
-		public override bool isVisibleFromCamera( Camera camera )
+		public override bool IsVisibleFromCamera( Camera camera )
 		{
 			calculateVertices();
-			return base.isVisibleFromCamera( camera );
+			return base.IsVisibleFromCamera( camera );
 		}
 
 
-		public override void render( Graphics graphics, Camera camera )
+		public override void Render( Graphics graphics, Camera camera )
 		{
 			calculateVertices();
 			_basicEffect.Projection = camera.projectionMatrix;

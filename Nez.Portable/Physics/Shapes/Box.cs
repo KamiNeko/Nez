@@ -74,7 +74,7 @@ namespace Nez.PhysicsShapes
 			if( isUnrotated )
 			{
 				if( other is Box && ( other as Box ).isUnrotated )
-					return bounds.intersects( ref ( other as Box ).bounds );
+					return bounds.Intersects( ref ( other as Box ).bounds );
 
 				if( other is Circle )
 					return Collisions.rectToCircle( ref bounds, other.position, ( other as Circle ).radius );
@@ -102,7 +102,7 @@ namespace Nez.PhysicsShapes
 		public override bool containsPoint( Vector2 point )
 		{
 			if( isUnrotated )
-				return bounds.contains( point );
+				return bounds.Contains( point );
 			
 			return base.containsPoint( point );
 		}

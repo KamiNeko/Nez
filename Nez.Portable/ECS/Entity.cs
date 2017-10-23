@@ -219,10 +219,10 @@ namespace Nez
 				// we only call through to the entityTagList if we already have a scene. if we dont have a scene yet we will be
 				// added to the entityTagList when we do
 				if( scene != null )
-					scene.entities.removeFromTagList( this );
+					scene.Entities.removeFromTagList( this );
 				_tag = tag;
 				if( scene != null )
-					scene.entities.addToTagList( this );
+					scene.Entities.addToTagList( this );
 			}
 
 			return this;
@@ -262,8 +262,8 @@ namespace Nez
 				_updateOrder = updateOrder;
 				if( scene != null )
 				{
-					scene.entities.markEntityListUnsorted();
-					scene.entities.markTagUnsorted( tag );
+					scene.Entities.markEntityListUnsorted();
+					scene.Entities.markTagUnsorted( tag );
 				}
 			}
 
@@ -279,7 +279,7 @@ namespace Nez
 		public void destroy()
 		{
 			_isDestroyed = true;
-			scene.entities.remove( this );
+			scene.Entities.remove( this );
 			transform.parent = null;
 
 			// destroy any children we have
@@ -298,7 +298,7 @@ namespace Nez
 		/// </summary>
 		public void detachFromScene()
 		{
-			scene.entities.remove( this );
+			scene.Entities.remove( this );
 			components.deregisterAllComponents();
 
 			for( var i = 0; i < transform.childCount; i++ )
@@ -313,7 +313,7 @@ namespace Nez
 		public void attachToScene( Scene newScene )
 		{
 			scene = newScene;
-			newScene.entities.add( this );
+			newScene.Entities.add( this );
 			components.registerAllComponents();
 
 			for( var i = 0; i < transform.childCount; i++ )
@@ -354,9 +354,9 @@ namespace Nez
 
 			// clone Components
 			for( var i = 0; i < entity.components.count; i++ )
-				addComponent( entity.components[i].clone() );
+				addComponent( entity.components[i].Clone() );
 			for( var i = 0; i < entity.components._componentsToAdd.Count; i++ )
-				addComponent( entity.components._componentsToAdd[i].clone() );
+				addComponent( entity.components._componentsToAdd[i].Clone() );
 
 			// clone any children of the Entity.transform
 			for( var i = 0; i < entity.transform.childCount; i++ )
@@ -421,9 +421,9 @@ namespace Nez
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public T addComponent<T>( T component ) where T : Component
 		{
-			component.entity = this;
+			component.Entity = this;
 			components.add( component );
-			component.initialize();
+			component.Initialize();
 			return component;
 		}
 
@@ -436,9 +436,9 @@ namespace Nez
 		public T addComponent<T>() where T : Component, new()
 		{
 			var component = new T();
-			component.entity = this;
+			component.Entity = this;
 			components.add( component );
-			component.initialize();
+			component.Initialize();
 			return component;
 		}
 

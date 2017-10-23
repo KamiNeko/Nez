@@ -59,7 +59,7 @@ namespace Nez
 				circle._originalRadius = radius;
 				_isPositionDirty = true;
 
-				if( entity != null && _isParentEntityAddedToScene )
+				if( Entity != null && _isParentEntityAddedToScene )
 					Physics.updateCollider( this );
 			}
 			return this;
@@ -68,11 +68,11 @@ namespace Nez
 		#endregion
 
 
-		public override void debugRender( Graphics graphics )
+		public override void DebugRender( Graphics graphics )
 		{
 			graphics.batcher.drawHollowRect( bounds, Debug.Colors.colliderBounds, Debug.Size.lineSizeMultiplier );
 			graphics.batcher.drawCircle( shape.position, ( (Circle)shape ).radius, Debug.Colors.colliderEdge, Debug.Size.lineSizeMultiplier );
-			graphics.batcher.drawPixel( entity.transform.position, Debug.Colors.colliderPosition, 4 * Debug.Size.lineSizeMultiplier );
+			graphics.batcher.drawPixel( Entity.transform.position, Debug.Colors.colliderPosition, 4 * Debug.Size.lineSizeMultiplier );
 			graphics.batcher.drawPixel( shape.position, Debug.Colors.colliderCenter, 2 * Debug.Size.lineSizeMultiplier );
 		}
 

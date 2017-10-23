@@ -20,7 +20,7 @@ namespace Nez
 
 		public void onAddedToScene()
 		{
-			effect = scene.content.loadEffect<Effect>( "multiTextureOverlay", EffectResource.multiTextureOverlayBytes );
+			effect = scene.ContentManager.loadEffect<Effect>( "multiTextureOverlay", EffectResource.multiTextureOverlayBytes );
 		}
 
 
@@ -59,20 +59,20 @@ namespace Nez
 		public void onSceneBackBufferSizeChanged( int newWidth, int newHeight )
 		{
 			// dont recreate the mosaic unless we really need to
-			if( _lastMosaicScale != scene.pixelPerfectScale )
+			if( _lastMosaicScale != scene.PixelPerfectScale )
 			{
-				createMosaicTexture( scene.pixelPerfectScale );
-				_lastMosaicScale = scene.pixelPerfectScale;
+				createMosaicTexture( scene.PixelPerfectScale );
+				_lastMosaicScale = scene.PixelPerfectScale;
 			}
 
 			if( _mosaicRenderTex != null )
 			{
 				_mosaicRenderTex.Dispose();
-				_mosaicRenderTex = RenderTarget.create( newWidth * scene.pixelPerfectScale, newHeight * scene.pixelPerfectScale, DepthFormat.None );
+				_mosaicRenderTex = RenderTarget.create( newWidth * scene.PixelPerfectScale, newHeight * scene.PixelPerfectScale, DepthFormat.None );
 			}
 			else
 			{
-				_mosaicRenderTex = RenderTarget.create( newWidth * scene.pixelPerfectScale, newHeight * scene.pixelPerfectScale, DepthFormat.None );
+				_mosaicRenderTex = RenderTarget.create( newWidth * scene.PixelPerfectScale, newHeight * scene.PixelPerfectScale, DepthFormat.None );
 			}
 
 			// based on the look of games by: http://deepnight.net/games/strike-of-rage/

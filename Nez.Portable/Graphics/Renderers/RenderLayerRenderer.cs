@@ -25,16 +25,16 @@ namespace Nez
 
 		public override void render( Scene scene )
 		{
-			var cam = camera ?? scene.camera;
+			var cam = camera ?? scene.Camera;
 			beginRender( cam );
 
 			for( var i = 0; i < renderLayers.Length; i++ )
 			{
-				var renderables = scene.renderableComponents.componentsWithRenderLayer( renderLayers[i] );
+				var renderables = scene.RenderableComponents.componentsWithRenderLayer( renderLayers[i] );
 				for( var j = 0; j < renderables.length; j++ )
 				{
 					var renderable = renderables.buffer[j];
-					if( renderable.enabled && renderable.isVisibleFromCamera( cam ) )
+					if( renderable.Enabled && renderable.IsVisibleFromCamera( cam ) )
 						renderAfterStateCheck( renderable, cam );
 				}
 			}
@@ -52,12 +52,12 @@ namespace Nez
 
 			for( var i = 0; i < renderLayers.Length; i++ )
 			{
-				var renderables = scene.renderableComponents.componentsWithRenderLayer( renderLayers[i] );
+				var renderables = scene.RenderableComponents.componentsWithRenderLayer( renderLayers[i] );
 				for( var j = 0; j < renderables.length; j++ )
 				{
 					var renderable = renderables.buffer[j];
-					if( renderable.enabled && renderable.isVisibleFromCamera( cam ) )
-						renderable.debugRender( Graphics.instance );
+					if( renderable.Enabled && renderable.IsVisibleFromCamera( cam ) )
+						renderable.DebugRender( Graphics.instance );
 				}
 			}
 		}

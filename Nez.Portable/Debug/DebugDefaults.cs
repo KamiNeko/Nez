@@ -33,7 +33,7 @@ namespace Nez
 			{
 				get
 				{
-					return System.Math.Max( Mathf.ceilToInt( (float)Core.scene.sceneRenderTargetSize.X / Screen.width ), 1 );
+					return System.Math.Max( Mathf.ceilToInt( (float)Core.scene.SceneRenderTargetSize.X / Screen.width ), 1 );
 				}
 			}
 		}

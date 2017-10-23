@@ -55,9 +55,9 @@ namespace Nez
 
 		public override void onAddedToScene()
 		{
-			_bloomExtractEffect = scene.content.loadEffect<Effect>( "bloomExtract", EffectResource.bloomExtractBytes );
-			_bloomCombineEffect = scene.content.loadEffect<Effect>( "bloomCombine", EffectResource.bloomCombineBytes );
-			_gaussianBlurEffect = scene.content.loadNezEffect<GaussianBlurEffect>();
+			_bloomExtractEffect = scene.ContentManager.loadEffect<Effect>( "bloomExtract", EffectResource.bloomExtractBytes );
+			_bloomCombineEffect = scene.ContentManager.loadEffect<Effect>( "bloomCombine", EffectResource.bloomCombineBytes );
+			_gaussianBlurEffect = scene.ContentManager.loadNezEffect<GaussianBlurEffect>();
 
 			_bloomExtractThresholdParam = _bloomExtractEffect.Parameters["_bloomThreshold"];
 
@@ -101,7 +101,7 @@ namespace Nez
 		/// </summary>
 		void updateBlurEffectDeltas()
 		{
-			var sceneRenderTargetSize = scene.sceneRenderTargetSize;
+			var sceneRenderTargetSize = scene.SceneRenderTargetSize;
 			_gaussianBlurEffect.horizontalBlurDelta = 1f / ( sceneRenderTargetSize.X * _renderTargetScale );
 			_gaussianBlurEffect.verticalBlurDelta = 1f / ( sceneRenderTargetSize.Y * _renderTargetScale );
 		}
@@ -111,7 +111,7 @@ namespace Nez
 		{
 			// aquire two rendertargets for the bloom processing. These can be scaled via renderTargetScale in order to minimize fillrate costs. Reducing
 			// the resolution in this way doesn't hurt quality, because we are going to be blurring the bloom images in any case.
-			var sceneRenderTargetSize = scene.sceneRenderTargetSize;
+			var sceneRenderTargetSize = scene.SceneRenderTargetSize;
 			var renderTarget1 = RenderTarget.getTemporary( (int)( sceneRenderTargetSize.X * renderTargetScale ), (int)( sceneRenderTargetSize.Y * renderTargetScale ), DepthFormat.None );
 			var renderTarget2 = RenderTarget.getTemporary( (int)( sceneRenderTargetSize.X * renderTargetScale ), (int)( sceneRenderTargetSize.Y * renderTargetScale ), DepthFormat.None );
 

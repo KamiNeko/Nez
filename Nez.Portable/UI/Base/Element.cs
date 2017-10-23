@@ -620,7 +620,7 @@ namespace Nez.UI
 				return false;
 
 			var tableBounds = RectangleExt.fromFloats( x, y, width, height );
-			var scissorBounds = ScissorStack.calculateScissors( stage?.entity?.scene?.camera, batcher.transformMatrix, tableBounds );
+			var scissorBounds = ScissorStack.calculateScissors( stage?.entity?.scene?.Camera, batcher.transformMatrix, tableBounds );
 			if( ScissorStack.pushScissors( scissorBounds ) )
 			{
 				batcher.enableScissorTest( true );

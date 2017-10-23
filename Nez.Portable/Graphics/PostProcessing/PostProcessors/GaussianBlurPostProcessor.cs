@@ -40,7 +40,7 @@ namespace Nez
 		/// </summary>
 		void updateEffectDeltas()
 		{
-			var sceneRenderTargetSize = scene.sceneRenderTargetSize;
+			var sceneRenderTargetSize = scene.SceneRenderTargetSize;
 			effect.horizontalBlurDelta = 1f / ( sceneRenderTargetSize.X * _renderTargetScale );
 			effect.verticalBlurDelta = 1f / ( sceneRenderTargetSize.Y * _renderTargetScale );
 		}
@@ -50,7 +50,7 @@ namespace Nez
 		{
 			// aquire a temporary rendertarget for the processing. It can be scaled via renderTargetScale in order to minimize fillrate costs. Reducing
 			// the resolution in this way doesn't hurt quality, because we are going to be blurring the images in any case.
-			var sceneRenderTargetSize = scene.sceneRenderTargetSize;
+			var sceneRenderTargetSize = scene.SceneRenderTargetSize;
 			var tempRenderTarget = RenderTarget.getTemporary( (int)( sceneRenderTargetSize.X * _renderTargetScale ), (int)( sceneRenderTargetSize.Y * _renderTargetScale ), DepthFormat.None );
 
 

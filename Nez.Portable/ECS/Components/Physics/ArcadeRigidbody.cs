@@ -160,9 +160,9 @@ namespace Nez
 		}
 
 
-		public override void onAddedToEntity()
+		public override void OnAddedToEntity()
 		{
-			_collider = entity.getComponent<Collider>();
+			_collider = Entity.getComponent<Collider>();
 		}
 
 
@@ -177,7 +177,7 @@ namespace Nez
 			if( shouldUseGravity )
 				velocity += Physics.gravity * Time.deltaTime;
 			
-			entity.transform.position += velocity * Time.deltaTime;
+			Entity.transform.position += velocity * Time.deltaTime;
 
 			CollisionResult collisionResult;
 			// fetch anything that we might collide with at our new position
@@ -188,7 +188,7 @@ namespace Nez
 				{
 					// if the neighbor has an ArcadeRigidbody we handle full collision response. If not, we calculate things based on the
 					// neighbor being immovable.
-					var neighborRigidbody = neighbor.entity.getComponent<ArcadeRigidbody>();
+					var neighborRigidbody = neighbor.Entity.getComponent<ArcadeRigidbody>();
 					if( neighborRigidbody != null )
 					{
 						processOverlap( neighborRigidbody, ref collisionResult.minimumTranslationVector );
@@ -197,7 +197,7 @@ namespace Nez
 					else
 					{
 						// neighbor has no ArcadeRigidbody so we assume its immovable and only move ourself
-						entity.transform.position -= collisionResult.minimumTranslationVector;
+						Entity.transform.position -= collisionResult.minimumTranslationVector;
 						var relativeVelocity = velocity;
 						calculateResponseVelocity( ref relativeVelocity, ref collisionResult.minimumTranslationVector, out relativeVelocity );
 						velocity += relativeVelocity;
@@ -216,16 +216,16 @@ namespace Nez
 		{
 			if( isImmovable )
 			{
-				other.entity.transform.position += minimumTranslationVector;
+				other.Entity.transform.position += minimumTranslationVector;
 			}
 			else if( other.isImmovable )
 			{
-				entity.transform.position -= minimumTranslationVector;
+				Entity.transform.position -= minimumTranslationVector;
 			}
 			else
 			{
-				entity.transform.position -= minimumTranslationVector * 0.5f;
-				other.entity.transform.position += minimumTranslationVector * 0.5f;
+				Entity.transform.position -= minimumTranslationVector * 0.5f;
+				other.Entity.transform.position += minimumTranslationVector * 0.5f;
 			}
 		}
 
