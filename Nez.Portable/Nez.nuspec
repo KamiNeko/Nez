@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>kamineko.nez</id>
+        <version>0.9.0-alpha</version>
+        <description>Fork of Nez</description>
+        <authors>prime31, kamineko</authors>
+
+    </metadata>
+</package>

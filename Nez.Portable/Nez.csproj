@@ -519,5 +519,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\SVG\Shapes\Paths\SvgPathBuilder.cs" />
+    <None Include="Nez.nuspec" />
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>nuget pack $(ProjectPath) -IncludeReferencedProjects -Prop Configuration=$(Configuration)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
